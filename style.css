@@ -1,0 +1,94 @@
+@font-face {
+    font-family: undertale;
+    src: url(src/fonts/determination-extended.ttf);
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body, html{
+    height: 100%;
+}
+
+body{
+    overflow-x: hidden;
+    background-color: black;
+}
+
+button{
+    cursor: pointer;
+}
+
+#navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 9vh;
+    width: 100vw;
+    padding: 0 20px;
+    border-bottom: 1px solid white;
+}
+
+#navbar img{
+    cursor: pointer;
+    height: 20px;
+} 
+
+#navbar button{
+    color: white;
+    background-color: #00000000;
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 15px;
+    font-family: verdana;
+    font-weight: 800;
+}
+
+#mainFrame{
+    height: calc(100vh - 9vh - 1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#mainFrame #divBtn button{
+    position: absolute;
+    top: calc(50% - 38.5px);
+    left: calc(50% - 158px);
+    background-color: #00000000;
+    color: white;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 18px 20px 12px 20px;
+    font-family: undertale;
+    font-size: 30px;
+}
+
+#videoTag {
+    width: 70vw;
+}
+
+#recepcao{
+    display: none;
+}
+
+#recepcao button{
+    position: absolute;
+    top: calc(50% - 38.5px);
+    left: calc(50% - 182px);
+    background-color: #00000000;
+    color: white;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 18px 20px 12px 20px;
+    font-family: undertale;
+    font-size: 30px;
+}
+
+#recepcao button span{
+    color: red;
+}
