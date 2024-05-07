@@ -47,13 +47,36 @@ button{
     font-weight: 800;
 }
 
+.divImgBackground{
+    display: none;
+    z-index: -1;
+    position: relative;
+    top: -32vh;
+}
+
 #mainFrame{
-    height: calc(100vh - 9vh - 1px);
+    height: calc(91vh - 1px);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+#mainFrame #divBtnPularAbertura{
+    position: absolute;
+    top: 5vh;
+    right: 3vw; 
+    display: none;
+}
+
+#divBtnPularAbertura button{
+    color: white;
+    background-color: #00000000;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 18px 15px 12px 20px;
+    font-family: undertale;
+    font-size: 25px;
+}
 
 #mainFrame #divBtn button{
     position: absolute;

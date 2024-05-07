@@ -17,6 +17,9 @@
         </div>
     </div>
     <div id="mainFrame">
+        <div id="divBtnPularAbertura">
+            <button onclick="pularAbertura()">Pular</button>
+        </div>
         <div id="divBtn">
             <button onclick="ligarVideo()">Começar Aventura</button>
         </div>
@@ -28,14 +31,20 @@
         <div id="recepcao">
             <button>Bem Vindo Ao <span>Subsolo</span></button>
         </div>
+        <div class="divImgBackground">
+            <img src="src/floweyZone.webp" alt="">
+        </div>
     </div>
 
     <script>
+        let pulouAbertura = false
+        let floweyBackground = document.querySelector('.divImgBackground');
         function ligarVideo() {
             let divVideo = document.getElementById('divVideo');
             let videoTag = document.getElementById('videoTag');
             let divBtn = document.getElementById('divBtn');
             let navbar = document.getElementById('navbar');
+
             divBtn.style.display = "none";
             divVideo.style.opacity = 0;
             divVideo.style.display = "block";
@@ -51,26 +60,62 @@
                 divVideo.style.transition = "opacity 1500ms";
                 divVideo.style.opacity = 1;
                 videoTag.play(); // Iniciar a reprodução do vídeo
+                divBtnPularAbertura.style.display = "block"
             }, 2000);
 
             setTimeout(() => {
-                divVideo.style.transition = "opacity 2000ms";
-                divVideo.style.opacity = 0;
-                setTimeout(() => {
-                    divVideo.style.display = "none"
-                    recepcao.style.opacity = 0
-                    recepcao.style.display = "block"
-                    navbar.style.opacity = 0
-                    navbar.style.display = "flex"
-                    setTimeout(()=>{
-                        recepcao.style.transition = "opacity 2000ms"
-                        recepcao.style.opacity = 1
-                        navbar.style.transition = "opacity 2000ms"
-                        navbar.style.opacity = 1
+                if (!pulouAbertura) {
+                    divBtnPularAbertura.style.display = "none"
+                    divVideo.style.transition = "opacity 2000ms";
+                    divVideo.style.opacity = 0;
+                    setTimeout(() => {
+                        divVideo.style.display = "none"
+                        recepcao.style.opacity = 0
+                        recepcao.style.display = "block"
+                        floweyBackground.style.opacity = 0
+                        floweyBackground.style.display = "block";
+                        navbar.style.opacity = 0
+                        navbar.style.display = "flex"
+                        floweyBackground.style.display = "block"
                         body.style.overflowY = "hidden"
-                    },100)
-                }, 2000)
+                        setTimeout(() => {
+                            recepcao.style.transition = "opacity 2000ms"
+                            recepcao.style.opacity = 1
+                            navbar.style.transition = "opacity 2000ms"
+                            navbar.style.opacity = 1
+                            floweyBackground.style.transition = "opacity 2000ms"
+                            floweyBackground.style.opacity = 1
+                            // body.style.overflowY = "hidden"
+                        }, 100)
+                    }, 2000)
+                }
             }, 86000)
+        }
+        function pularAbertura() {
+            divBtnPularAbertura.style.display = "none"
+            divVideo.style.transition = "opacity 2000ms";
+            divVideo.style.opacity = 0;
+            setTimeout(() => {
+                divVideo.style.display = "none"
+                recepcao.style.opacity = 0
+                recepcao.style.display = "block"
+                floweyBackground.style.opacity = 0
+                floweyBackground.style.display = "block";
+                navbar.style.opacity = 0
+                navbar.style.display = "flex"
+                floweyBackground.style.display = "block"
+                body.style.overflowY = "hidden"
+                setTimeout(() => {
+                    recepcao.style.transition = "opacity 2000ms"
+                    recepcao.style.opacity = 1
+                    navbar.style.transition = "opacity 2000ms"
+                    navbar.style.opacity = 1
+                    floweyBackground.style.transition = "opacity 2000ms"
+                    floweyBackground.style.opacity = 1
+                    // body.style.overflowY = "hidden"
+                }, 100)
+            }, 2000)
+            pulouAbertura = true
         }
     </script>
 </body>
