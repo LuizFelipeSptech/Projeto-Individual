@@ -32,18 +32,27 @@ button{
     font-weight: 800;
 }
 
-.divImgBackground{
-    display: none;
-    z-index: -1;
-    position: relative;
-    top: -32vh;
-}
 
 #mainFrame{
     height: calc(91vh - 1px);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#imgFlowey {
+    z-index: -1;
+    position: relative;
+    top: -28vh;
+}
+
+#imgCaracters img{
+    height: 80vh;
+    position: relative;
+    z-index: -2;
+    top: -60px;
+    left: 4px;
+    height: 90vh;
 }
 
 #mainFrame #divBtnPularAbertura{
@@ -67,7 +76,7 @@ button{
     position: absolute;
     top: calc(50% - 38.5px);
     left: calc(50% - 158px);
-    background-color: #00000000;
+    background-color: #000000CF;
     color: white;
     border: 2px solid white;
     border-radius: 15px;

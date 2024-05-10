@@ -34,36 +34,45 @@
         <div id="recepcao">
             <button>Bem Vindo Ao <span>Subsolo</span></button>
         </div>
-        <div class="divImgBackground">
+        <div id="imgCaracters">
+            <img src="../src/caractersAndLogo.png" alt="">
+        </div>
+        <div id="imgFlowey" style="display: none;">
             <img src="../src/floweyZone.webp" alt="">
         </div>
     </div>
 
     <script>
         let pulouAbertura = false
-        let floweyBackground = document.querySelector('.divImgBackground');
         function ligarVideo() {
             let divVideo = document.getElementById('divVideo');
             let videoTag = document.getElementById('videoTag');
             let divBtn = document.getElementById('divBtn');
             let navbar = document.getElementById('navbar');
+            let imgCaracters = document.getElementById('imgCaracters');
 
             divBtn.style.display = "none";
             divVideo.style.opacity = 0;
-            divVideo.style.display = "block";
             navbar.style.opacity = 1;
+            imgCaracters.style.opacity = 1;
             setTimeout(() => {
                 navbar.style.transition = "opacity 2000ms";
                 navbar.style.opacity = 0;
+                imgCaracters.style.transition = "opacity 2000ms";
+                imgCaracters.style.opacity = 0;
             }, 100)
-
+            
             setTimeout(() => {
+                imgCaracters.style.display = "none";
                 navbar.style.display = "none";
-                mainFrame.style.height = "100vh"
-                divVideo.style.transition = "opacity 1500ms";
-                divVideo.style.opacity = 1;
-                videoTag.play(); // Iniciar a reprodução do vídeo
-                divBtnPularAbertura.style.display = "block"
+                divVideo.style.display = "block";
+                setTimeout(() => {
+                    mainFrame.style.height = "100vh"
+                    divVideo.style.transition = "opacity 1500ms";
+                    divVideo.style.opacity = 1;
+                    videoTag.play(); // Iniciar a reprodução do vídeo
+                    divBtnPularAbertura.style.display = "block"
+                }, 10);
             }, 2000);
 
             setTimeout(() => {
@@ -78,6 +87,8 @@
         }
 
         function fadeOutVideo() {
+            let floweyBackground = document.getElementById('imgFlowey');
+
             divBtnPularAbertura.style.display = "none"
             divVideo.style.transition = "opacity 2000ms";
             divVideo.style.opacity = 0;
@@ -98,7 +109,6 @@
                     navbar.style.opacity = 1
                     floweyBackground.style.transition = "opacity 2000ms"
                     floweyBackground.style.opacity = 1
-                    // body.style.overflowY = "hidden"
                 }, 100)
             }, 2000)
         }
