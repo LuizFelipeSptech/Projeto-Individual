@@ -1,12 +1,77 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="config.css">
+    <link rel="stylesheet" href="../css/config.css">
+    <link rel="stylesheet" href="../css/cadastroLogin.css">
     <title>Cadastro</title>
 </head>
-<body>
 
+<body>
+    <div id="container">
+        <div id="sub-container">
+            <div id="cover" style="transform: translate(198px, 0);"></div>
+            <div class="divForm">
+                <form>
+                    <h2>Cadastre-se</h2>
+                    <input id="inpNomeCadastro" type="text" placeholder="Nome" title="Insira Seu Nome" required><br>
+                    <input id="inpEmailCadastro" type="text" placeholder="Email" title="Insira Seu Email" required><br>
+                    <input id="inpSenhaCadastro" type="text" placeholder="Senha" title="Insira Sua Nova Senha" required><br>
+                    <input id="inpConfirmarCadastro" type="text" title="Confirme Sua Senha" placeholder="Confirmar Senha" required><br>
+                </form>
+                <p onclick="mostrarLogin()">Já tenho conta! Logar</p>
+                <div id="divErrorMessage" style="color: rgb(226, 0, 0);margin-top: 4px;font-size: 20px;"></div>
+                <button onclick="envioCadastro()">Enviar</button>
+            </div>
+            <div class="divForm">
+                <form>
+                    <h2>Login</h2>
+                    <input name="nome" id="inpEmailLogin" type="text" placeholder="Email" required><br>
+                    <input name="nome" id="inpSenhaLogin" type="text" placeholder="Senha" required><br>
+                </form>
+                <p onclick="mostrarCadastro()">Não tem uma conta? Cadastre-se!</p>
+                <button onclick="envioLogin()">Enviar</button>
+            </div>
+            <div id="divHeart">
+                <img src="../src/UndertaleHeart.png">
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
+
+<script>
+    function mostrarCadastro() {
+        cover.style.transform = "translate(198px, 0)"
+    }
+    function mostrarLogin() {
+        cover.style.transform = "translate(-198px, 0)"
+    }
+
+    function envioCadastro() {
+        const nome = inpNomeCadastro.value.trim()
+        const email = inpEmailCadastro.value.trim()
+        const senha = inpSenhaCadastro.value.trim()
+        const confirmarSenha = inpConfirmarCadastro.value.trim()
+
+        let errorMessage = ''
+
+        if (nome.length <= 2) {
+            errorMessage = "Nome Muito Curto"
+        } else if (email.indexOf("@") == -1 ||
+            email.indexOf("@") > email.lastIndexOf(".") ||
+            email.length < 5) {
+            errorMessage = "Email Inválido"
+        } else if (senha.length < 4) {
+            errorMessage = "Senha Muito Curta"
+        } else if (senha == senha.toLowerCase()) {
+            errorMessage = "Senha Deve Conter Letras Maiuscula"
+        } else if (senha != confirmarSenha) {
+            errorMessage = "Senhas Incoerentes"
+        }
+        divErrorMessage.innerHTML = errorMessage
+    }
+</script>
