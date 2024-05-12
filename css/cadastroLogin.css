@@ -39,12 +39,11 @@ body{
     border: 2px solid white;
     text-align: center;
     border-radius: 50px;
+    overflow-x: hidden;
 }
 
 #cover{
     position: absolute;
-    transition: transform 1s ease-out;
-    transform: translate(198px, 0);
     border: none;
     background-color: #000;
     border-radius: 30px;
@@ -80,7 +79,7 @@ body{
     font-family: undertale;
     text-decoration: underline;
     font-size: 15px;
-    margin: 0 auto;
+    margin: 10px auto;
     width: fit-content;
     cursor: pointer;
 }
@@ -94,7 +93,7 @@ body{
     background-color: #000;
     border: 1px solid white;
     border-radius: 10px;
-    padding: 20px 42px 18px 48px;
+    padding: 3.2vh 2.7vw 3vh 3.1vw;
     cursor: pointer; 
     transition: 200ms;
 }
