@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
-<!-- Arrumar bug: som do video não para -->
+<html lang="pt-BR" id="scroller">
 
 <head>
     <meta charset="UTF-8">
@@ -12,109 +10,159 @@
 </head>
 
 <body id="body">
-    <div id="navbar">
-        <a href="mainPage.html">
-            <img src="assets/imgs/UndertaleHeart.png" alt="">
-        </a>
-        <div id="loginButtons">
-            <button onclick="location.href='cadastroLogin.html'">Cadastro</button>
-            <button onclick="location.href='cadastroLogin.html'">Login</button>
-        </div>
-    </div>
-    <div id="mainFrame">
-        <div id="divBtnPularAbertura">
-            <button onclick="pularAbertura()"><span>Pular</span></button>
-        </div>
-        <div id="divBtn">
-            <button onclick="ligarVideo()"><span>Começar Aventura</span></button>
-        </div>
-        <div id="divVideo" style="display: none;">
-            <video id="videoTag">
-                <source src="assets/Undertale - Abertura (PT_BR).mp4" type="video/mp4">
-            </video>
-        </div>
-        <div id="recepcao">
-            <button>Bem Vindo Ao <span>Subsolo</span></button>
-        </div>
-        <div id="imgCaracters">
-            <img src="assets/imgs/caractersAndLogo.png" alt="">
-        </div>
-        <div id="imgFlowey" style="display: none;">
-            <img src="assets/imgs/floweyZone.webp" alt="">
-        </div>
-    </div>
-
-    <script>
-        let pulouAbertura = false
-        function ligarVideo() {
-            let divVideo = document.getElementById('divVideo');
-            let videoTag = document.getElementById('videoTag');
-            let divBtn = document.getElementById('divBtn');
-            let navbar = document.getElementById('navbar');
-            let imgCaracters = document.getElementById('imgCaracters');
-
-            divBtn.style.display = "none";
-            divVideo.style.opacity = 0;
-            navbar.style.opacity = 1;
-            imgCaracters.style.opacity = 1;
-            setTimeout(() => {
-                navbar.style.transition = "opacity 2000ms";
-                navbar.style.opacity = 0;
-                imgCaracters.style.transition = "opacity 2000ms";
-                imgCaracters.style.opacity = 0;
-            }, 100)
-            
-            setTimeout(() => {
-                imgCaracters.style.display = "none";
-                navbar.style.display = "none";
-                divVideo.style.display = "block";
-                setTimeout(() => {
-                    mainFrame.style.height = "100vh"
-                    divVideo.style.transition = "opacity 1500ms";
-                    divVideo.style.opacity = 1;
-                    videoTag.play(); // Iniciar a reprodução do vídeo
-                    divBtnPularAbertura.style.display = "block"
-                }, 10);
-            }, 2000);
-
-            setTimeout(() => {
-                if (!pulouAbertura) {
-                    fadeOutVideo()
-                }
-            }, 86000)
-        }
-        function pularAbertura() {
-            fadeOutVideo()
-            pulouAbertura = true
-        }
-
-        function fadeOutVideo() {
-            let floweyBackground = document.getElementById('imgFlowey');
-
-            divBtnPularAbertura.style.display = "none"
-            divVideo.style.transition = "opacity 2000ms";
-            divVideo.style.opacity = 0;
-            setTimeout(() => {
-                divVideo.style.display = "none"
-                recepcao.style.opacity = 0
-                recepcao.style.display = "block"
-                floweyBackground.style.opacity = 0
-                floweyBackground.style.display = "block";
-                navbar.style.opacity = 0
-                navbar.style.display = "flex"
-                floweyBackground.style.display = "block"
-                body.style.overflowY = "hidden"
-                setTimeout(() => {
-                    recepcao.style.transition = "opacity 2000ms"
-                    recepcao.style.opacity = 1
-                    navbar.style.transition = "opacity 2000ms"
-                    navbar.style.opacity = 1
-                    floweyBackground.style.transition = "opacity 2000ms"
-                    floweyBackground.style.opacity = 1
-                }, 100)
-            }, 2000)
-        }
-    </script>
+    <main id="scroller">
+        <section id="navbar">
+            <a href="mainPage.html">
+                <img src="assets/imgs/UndertaleHeart.png" alt="">
+            </a>
+            <div id="loginButtons">
+                <button onclick="location.href='cadastroLogin.html'">Cadastro</button>
+                <button onclick="location.href='cadastroLogin.html'">Login</button>
+            </div>
+        </section>
+        <section id="mainFrame">
+            <div id="divBtnPularAbertura">
+                <button onclick="pularAbertura()"><span>Pular</span></button>
+            </div>
+            <div id="divBtn">
+                <button onclick="ligarVideo()"><span>Começar Aventura</span></button>
+            </div>
+            <div id="divVideo" style="display: none;">
+                <video id="videoTag">
+                    <source src="assets/Undertale - Abertura (PT_BR).mp4" type="video/mp4">
+                </video>
+            </div>
+            <div id="recepcao">
+                <button>Bem Vindo Ao <span>Subsolo</span></button>
+            </div>
+            <div id="imgReino">
+                <img src="assets/imgs/reino.png" alt="">
+            </div>
+            <div id="imgFlowey" style="display: none;">
+                <img src="assets/imgs/floweyZone.webp" alt="">
+            </div>
+        </section>
+        <section id="sobreUndertale">
+            <div id="divTextAboutUndertale">
+                <h2>O que é Undertale?</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias excepturi blanditiis itaque deserunt
+                    distinctio quaerat vitae, consectetur, perferendis, esse adipisci eius? Ipsa, asperiores totam
+                    similique vero quos laborum tempore, sequi eveniet amet vitae non vel, rem laudantium quas esse
+                    earum soluta voluptatem unde accusantium repellendus voluptatibus consectetur veritatis facilis
+                    odit!
+                </p>
+            </div>
+            <div id="divImgAboutUndertale">
+                <img src="assets/imgs/friskWithHeart.png" alt="">
+            </div>
+        </section>
+        <section id="underAndI">
+            <div id="divImgUnderAndI">
+                <img src="assets/imgs/sans.png" alt="">
+            </div>
+            <div id="divTextUnderAndI">
+                <h2>O que é Undertale?</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias excepturi blanditiis itaque deserunt
+                    distinctio quaerat vitae, consectetur, perferendis, esse adipisci eius? Ipsa, asperiores totam
+                    similique vero quos laborum tempore, sequi eveniet amet vitae non vel, rem laudantium quas esse
+                    earum soluta voluptatem unde accusantium repellendus voluptatibus consectetur veritatis facilis
+                    odit!
+                </p>
+            </div>
+        </section>
+        <section id="ONU">
+            <div id="divTextONU">
+                <h2>O que é Undertale?</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias excepturi blanditiis itaque deserunt
+                    distinctio quaerat vitae, consectetur, perferendis, esse adipisci eius? Ipsa, asperiores totam
+                    similique vero quos laborum tempore, sequi eveniet amet vitae non vel, rem laudantium quas esse
+                    earum soluta voluptatem unde accusantium repellendus voluptatibus consectetur veritatis facilis
+                    odit!
+                </p>
+            </div>
+            <div id="divImgONU">
+                <img src="assets/imgs/Undyne.jpg!d" alt="">
+            </div>
+        </section>
+    </main>
 </body>
 
 </html>
+<script>
+    let pulouAbertura = false
+    function ligarVideo() {
+        let divVideo = document.getElementById('divVideo');
+        let videoTag = document.getElementById('videoTag');
+        let divBtn = document.getElementById('divBtn');
+        let navbar = document.getElementById('navbar');
+        let imgReino = document.getElementById('imgReino');
+
+        ONU.style.display = "none";
+        sobreUndertale.style.display = "none";
+        underAndI.style.display = "none";
+        divBtn.style.display = "none";
+        divVideo.style.opacity = 0;
+        navbar.style.opacity = 1;
+        imgReino.style.opacity = 1;
+        setTimeout(() => {
+            navbar.style.transition = "opacity 2000ms";
+            navbar.style.opacity = 0;
+            imgReino.style.transition = "opacity 2000ms";
+            imgReino.style.opacity = 0;
+        }, 100)
+
+        setTimeout(() => {
+            imgReino.style.display = "none";
+            navbar.style.display = "none";
+            divVideo.style.display = "block";
+            setTimeout(() => {
+                mainFrame.style.height = "100vh"
+                divVideo.style.transition = "opacity 1500ms";
+                divVideo.style.opacity = 1;
+                videoTag.play(); // Iniciar a reprodução do vídeo
+                divBtnPularAbertura.style.display = "block"
+            }, 10);
+        }, 2000);
+
+        setTimeout(() => {
+            if (!pulouAbertura) {
+                fadeOutVideo()
+            }
+        }, 86000)
+    }
+    function pularAbertura() {
+        fadeOutVideo()
+        pulouAbertura = true
+    }
+
+    function fadeOutVideo() {
+        let floweyBackground = document.getElementById('imgFlowey');
+
+        divBtnPularAbertura.style.display = "none"
+        divVideo.style.transition = "opacity 2000ms";
+        divVideo.style.opacity = 0;
+        setTimeout(() => {
+            divVideo.style.display = "none"
+            recepcao.style.opacity = 0
+            recepcao.style.display = "block"
+            floweyBackground.style.opacity = 0
+            floweyBackground.style.display = "block";
+            navbar.style.opacity = 0
+            navbar.style.display = "flex"
+            floweyBackground.style.display = "block"
+            body.style.overflowY = "hidden"
+            videoTag.pause();
+            setTimeout(() => {
+                recepcao.style.transition = "opacity 2000ms"
+                recepcao.style.opacity = 1
+                navbar.style.transition = "opacity 2000ms"
+                navbar.style.opacity = 1
+                floweyBackground.style.transition = "opacity 2000ms"
+                floweyBackground.style.opacity = 1
+            }, 100)
+        }, 2000)
+    }
+</script>
