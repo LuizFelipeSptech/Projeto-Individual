@@ -96,8 +96,26 @@
             errorMessage = "Senha Deve Conter Letras Maiuscula"
         } else if (senha != confirmarSenha) {
             errorMessage = "Senhas Incoerentes"
+        } else {
+            divErrorMessageCadastro.innerHTML = errorMessage
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
         }
-        divErrorMessageCadastro.innerHTML = errorMessage
     }
 
     function envioLogin() {
@@ -114,7 +132,37 @@
             email.length < 5 || senha.length < 4 ||
             senha == senha.toLowerCase()) {
             errorMessage = "Senha Ou Email Invalidos"
+        } else {
+            divErrorMessageLogin.innerHTML = errorMessage
+            fetch("/usuarios/autenticar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                        sessionStorage.EMAIL_USUARIO = json.email;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.ID_USUARIO = json.id;
+                    });
+                    console.log("Deu Certo")
+                } else {
+                    console.log("Houve um erro ao tentar realizar o login!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+            })
         }
-        divErrorMessageLogin.innerHTML = errorMessage
     }
 </script>
