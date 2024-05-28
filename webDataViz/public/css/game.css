@@ -1,0 +1,38 @@
+html{
+    overflow-x: hidden;
+}
+
+header{
+    position: absolute;
+}
+
+img{
+    height: 100px;
+}
+
+#sectionsHistory {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+}
+
+#sectionsHistory section {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divTextAndButton {
+    width: 43vw;
+    margin-right: 3vw;
+}
+
+.divTextAndButton p {
+    letter-spacing: 2.5px;
+    line-height: 22.1px;
+    margin-top: 2vh;
+    text-indent: 30px;
+    text-align: justify;
+}

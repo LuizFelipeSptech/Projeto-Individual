@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/config.css">
+    <link rel="stylesheet" href="./css/fight.css">
+    <title>TechTale</title>
+</head>
+
+<body>
+    <main id="mainFrame">
+        <div id="torielFightBackground">
+            <img src="assets/TorielBattleClean.png">
+        </div>
+        <div id="torielHealthContainer">
+            <div id="torielHealth">
+                <div id="currentHealt"></div>
+            </div>
+        </div>
+        <div id="divButtons">
+            <button onclick="atacar()" id="btnAtacar"><img src="assets/imgs/UndertaleHeart.png"
+                    class="btnImgHeart"><span>FIGHT</span></button>
+            <button><img src="assets/imgs/UndertaleHeart.png" class="btnImgHeart"><span>MERCY</span></button>
+        </div>
+        <div id="containerVida">
+            <div id="divVida">
+                <p>HP: 20/20</p>
+            </div>
+        </div>
+        <div id="chatContainer">
+            <div id="chat">
+                <div id="line">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+            </div>
+        </div>
+        <div id="hit">
+            <img id="hitGif" src="">
+        </div>
+        <div id="divFireball1" class="divFireball">
+            <img src="assets/fireball.png" class="fireball">
+        </div>
+        <div id="divFireball2" class="divFireball">
+            <img src="assets/fireball.png" class="fireball">
+        </div>
+        <div id="divFireball3" class="divFireball">
+            <img src="assets/fireball.png" class="fireball">
+        </div>
+        <div id="divFireball4" class="divFireball">
+            <img src="assets/fireball.png" class="fireball">
+        </div>
+        <div id="divFireball5" class="divFireball">
+            <img src="assets/fireball.png" class="fireball">
+        </div>
+    </main>
+    <div id="gameover">
+        <h1>GameOver</h1>
+        <button onclick="reset()">
+            <p>Restart</p>
+        </button>
+    </div>
+</body>
+
+</html>
+
+<script>
+    // Gif Time = 560ms
+
+    let vidaVisivel = false
+    let vidaAtual = 20
+    let danoAcumulado = 0
+    let danoTomadoNoTurno = 0
+
+    function atacar() {
+        btnAtacar.disabled = true
+        chatContainer.style.display = "none"
+        hitGif.src = "assets/com--unscreen.gif"
+        trocarVisibilidadeVida()
+        setTimeout(() => {
+            hitGif.src = ""
+            calcularDano()
+            tremerElementosDireita()
+            setTimeout(() => {
+                trocarVisibilidadeVida()
+                chatContainer.style.display = "flex"
+                roundToriel()
+            }, 300);
+        }, 560);
+    }
+
+    function trocarVisibilidadeVida() {
+        if (vidaVisivel) {
+            torielHealth.style.display = "none"
+            vidaVisivel = false
+        } else {
+            torielHealth.style.display = "flex"
+            vidaVisivel = true
+        }
+    }
+
+    function tremerElementosDireita() {
+        torielHealth.style.transform = "translate(3px)"
+        torielFightBackground.style.transform = "translate(3px)"
+        setTimeout(tremerElementosEsquerda, 100);
+    }
+
+    function tremerElementosEsquerda() {
+        torielHealth.style.transform = "translate(-3px)"
+        torielFightBackground.style.transform = "translate(-3px)"
+        setTimeout(voltarElementosPosicaoOriginal, 100);
+    }
+
+    function voltarElementosPosicaoOriginal() {
+        torielHealth.style.transform = "translate(0px)"
+        torielFightBackground.style.transform = "translate(0px)"
+    }
+
+    function calcularDano() {
+        let danoDadoNoTurno = Math.ceil(Math.random() * 9) + 14
+        danoTomadoNoTurno = Math.floor(Math.random() * 3) + 2
+        danoAcumulado += danoDadoNoTurno
+        if(danoAcumulado > 100){
+            danoAcumulado = 100
+        }
+        currentHealt.style.width = `${100 - (danoAcumulado)}%`
+    }
+
+
+    let numeroFireball = 0
+    function roundToriel() {
+        summonFireBalls()
+        setTimeout(() => {
+            divFireball1.style.transform = "translate(21.5vw, 0)"
+            divFireball2.style.transform = "translate(-21.5vw, 0)"
+            numeroFireball = 0
+            setTimeout(() => {
+                dissaperFireball()
+            }, 1000);
+        }, 3000);
+    }
+
+    function summonFireBalls() {
+        let fireballs = document.getElementsByClassName("divFireball")
+        let fireballsArray = Array.from(fireballs)
+        setTimeout(() => {
+            fireballsArray[numeroFireball].style.display = "block"
+            fireballsArray[numeroFireball].style.opacity = 1
+            numeroFireball++
+            if (fireballsArray.length != numeroFireball) {
+                summonFireBalls()
+            }
+        }, 500)
+    }
+
+    function dissaperFireball() {
+        let fireballs = document.getElementsByClassName("divFireball")
+        let fireballsArray = Array.from(fireballs)
+        fireballsArray[numeroFireball].style.opacity = 0
+        // fireballsArray[numeroFireball].style.display = "none"
+        numeroFireball++
+        if (fireballsArray.length != numeroFireball) {
+            dissaperFireball()
+        } else {
+            divFireball1.style.transform = "translate(0, 0)"
+            divFireball2.style.transform = "translate(0, 0)"
+            numeroFireball = 0
+            processarDano()
+        }
+    }
+
+
+    function processarDano() {
+        vidaAtual -= danoTomadoNoTurno
+        if (vidaAtual > 0) {
+            apagarVida()
+            divVida.innerHTML = `<p>HP: ${vidaAtual}/20</p>`
+            setTimeout(acenderVida, 200)
+            setTimeout(apagarVida, 400)
+            setTimeout(acenderVida, 600)
+        } else {
+            mainFrame.style.display = "none"
+            setInterval(mostrarGameover, 2000)
+        }
+        btnAtacar.disabled = false
+    }
+
+    function apagarVida() {
+        divVida.style.display = "none"
+    }
+
+    function acenderVida() {
+        divVida.style.display = "block"
+    }
+
+    function mostrarGameover() {
+        gameover.style.display = "flex"
+    }
+
+    function reset() {
+        gameover.style.display = "none"
+        mainFrame.style.display = "block"
+        vidaAtual = 20
+        danoAcumulado = 0
+        currentHealt.style.width = "100%"
+        divVida.innerHTML = `<p>HP: ${vidaAtual}/20</p>`
+    }
+</script>

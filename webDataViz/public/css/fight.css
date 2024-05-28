@@ -1,0 +1,194 @@
+body{
+    background-color: black;
+    overflow: hidden;
+}
+
+main{
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    top: 5vh;
+}
+
+#torielFightBackground{
+    position: absolute;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    top:10vh;
+    transition: transform 50ms;
+}
+
+#torielFightBackground img{
+    transform: scale(1.25);
+}
+
+#torielHealthContainer{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid red; */
+    width: 100vw;
+    height: 10vh;
+    top: 5vh;
+}
+
+#torielHealth{
+    display: none;
+    width: 18vw;
+    height: 3vh;
+    transition: transform 50ms;
+    background-color: #3f3f3f;
+}
+
+#currentHealt{
+    background-color: rgb(80 255 23);
+    width: 100%;
+    height: 100%;    
+    transition: 200ms;
+}
+
+#divButtons{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 72vh;
+    gap: 1.5vw;
+    z-index: 2;
+}
+
+#divButtons button{
+    height: 12.5vh;
+    width: 15vw;
+    background-color: transparent;
+    border: 3px solid #F67C33;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px;
+
+}
+
+#divButtons button .btnImgHeart{
+    opacity: 0;
+    height: 30px;
+    transition: 100ms;
+}
+
+#divButtons button:hover .btnImgHeart{
+    opacity: 1;
+    transition: 200ms;
+}
+
+#divButtons button span{
+    color: #F67C33;
+    font-size: 4em;
+    height: 2.5rem;
+}
+
+#chatContainer{
+    position: relative;
+    display: flex;
+    /* display: none; */
+    justify-content: center;
+    top: 30vh;
+}
+
+#chat{
+    width: 52vw;
+    height: 27vh;
+    padding: 10px 5px;
+}
+
+#chat p {
+    letter-spacing: 1px;
+    line-height: 22.1px;
+    margin-top: 2vh;
+
+}
+
+#hit{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    bottom:10vh;
+    /* display: none; */
+}
+
+#hit img{
+    height: 40vh;
+}
+
+.divFireball{
+    display: block;
+    position: absolute;
+    transition: opacity 2000ms, transform 500ms;
+    filter: drop-shadow(0px 0px 10px white);
+    opacity: 0;
+}
+
+.fireball{
+    height: 70px;
+}
+
+#divFireball1{
+    top: 2vh;
+    right: 52vw;
+}
+#divFireball2{
+    top: 2vh;
+    left: 52vw;
+}
+#divFireball3{
+    top: 12vh;
+    right: 54vw;
+}
+#divFireball4{
+    top: 12vh;
+    left: 54vw;
+}
+#divFireball5{
+    top: -3vh;
+    right: 45.3vw;
+}
+
+#containerVida{
+    position: absolute;
+    bottom: 28.8vh;
+    left: 44vw;
+    /* border: 1px solid red; */
+}
+
+#divVida p{
+    letter-spacing: 1px;
+    line-height: 22.1px;
+    font-size: 2rem;
+}
+
+#gameover{
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#gameover h1{
+    font-size: 5rem;
+    cursor: default;
+}
+
+#gameover button{
+    background-color: transparent;
+    border: 0;
+}
+
+#gameover button p{
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+#gameover button:hover p{
+    text-decoration: underline;
+}
