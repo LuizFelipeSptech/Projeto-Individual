@@ -1,0 +1,24 @@
+html{
+    overflow-y: hidden;
+}
+
+#divBackgroundImg {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    left:-50vw;
+    z-index: -10;
+}
+
+#divBackgroundImg img{
+    height: 100vh;
+    filter: brightness(15%);
+}
+
+#mainframe{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

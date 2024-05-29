@@ -97,7 +97,7 @@ body::-webkit-scrollbar {
 #imgReino img{
     height: 100vh;
     position: relative;
-    z-index: -2;
+    z-index: -1;
     top: 40px;
 }
 

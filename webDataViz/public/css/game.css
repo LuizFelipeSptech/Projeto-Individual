@@ -2,6 +2,10 @@ html{
     overflow-x: hidden;
 }
 
+body{
+    background-color: black;
+}
+
 header{
     position: absolute;
 }
