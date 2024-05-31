@@ -13,8 +13,36 @@
 <body>
     <div id="divBackgroundImg"><img src="assets/corridor.webp"></div>
     <div id="mainframe">
-        <div>
-            <canvas id="myChart"></canvas>
+        <div id="divCardDashboards">
+            <div id="divVoltarParaLuta">
+                <a href="fight.html">
+                    <img src="assets/setaVoltar.png">
+                    <p>Batalhar Novamente</p>
+                </a>
+            </div>
+            <div id="divHeaderText">
+                <h2 id="textReception">Olá <span id="spanUserName">"USER"</span>, este é o julgamento:</h2>
+            </div>
+            <div id="divKPIS">
+                <div id="divKPIMortesToriel" class="kpiCard">
+                    <p>Toriel morreu:</p>
+                    <span>100%</span>
+                    <p>das vezes</p>
+                </div>
+                <div id="divKPIMortesPlayers" class="kpiCard">
+                    <p>Toriel matou:</p>
+                    <span>100%</span>
+                    <p>das vezes</p>
+                </div>
+            </div>
+            <div id="divCharts">
+                <div class="charts">
+                    <canvas id="killsChart"></canvas>
+                </div>
+                <div class="charts">
+                    <canvas id="deadsChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </body>
@@ -22,15 +50,36 @@
 </html>
 
 <script>
+    Chart.defaults.backgroundColor = '#FFFFFF';
+    Chart.defaults.borderColor = '#FFFFFF';
+    Chart.defaults.color = '#FFFFFF';
 
-    new Chart(myChart, {
-        type: 'bar',
+    const playerMatouToriel = sessionStorage.MATOU_TORIEL == "true"
+
+    if(playerMatouToriel){
+        textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${"USER"}</span>, este é O julgamento:</h2>`
+    } else {
+        textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:white">${"USER"}</span>, este é O julgamento:</h2>`
+        
+    }
+
+    new Chart(killsChart, {
+        type: 'pie',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['Toriel foi morta', 'Toriel foi poupada'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
+                data: [12, 19],
+                backgroundColor: ["#000000","#FFFFFF"]
+            }]
+        }
+    });
+    new Chart(deadsChart, {
+        type: 'pie',
+        data: {
+            labels: ['Toriel Matou', 'Toriel Poupou'],
+            datasets: [{
+                data: [12, 19],
+                backgroundColor: ["#000000","#FFFFFF"]
             }]
         }
     });

@@ -23,6 +23,20 @@ main{
     transform: scale(1.25);
 }
 
+#divTorielMorta{
+    position: absolute;
+    width: 100vw;
+    display: none;
+    justify-content: center;
+}
+
+#divTorielMorta img{
+    position: relative;
+    top: 8.9vh;
+    left: 1px;
+    height: 33.5vh;
+}
+
 #torielHealthContainer{
     position: absolute;
     display: flex;
@@ -100,11 +114,28 @@ main{
     padding: 10px 5px;
 }
 
+#line{
+    width: 100%;
+    /* transition: 10000ms; */
+}
+
+#line p {
+    
+    float: left;
+}
+
 #chat p {
     letter-spacing: 1px;
     line-height: 22.1px;
     margin-top: 2vh;
+}
 
+#pLine{
+    /* width: min-content; */
+    /* border: 1px solid red; */
+    /* position: absolute; */
+    text-wrap: nowrap;
+    overflow-x: hidden;
 }
 
 #hit{

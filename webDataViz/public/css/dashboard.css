@@ -22,3 +22,96 @@ html{
     justify-content: center;
     align-items: center;
 }
+
+#divCardDashboards{
+    position: relative;
+    height: 95vh;
+    width: 80vw;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#divVoltarParaLuta{
+    position: absolute;
+    /* border: 2px solid red; */
+    top: 15px;
+}
+
+#divVoltarParaLuta a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 30px;
+    overflow-x: hidden;
+    text-decoration: none;
+    transition: width 200ms steps(18);
+}
+
+#divVoltarParaLuta a img{
+    height: 30px;
+    filter: invert();
+}
+
+#divVoltarParaLuta a:hover{
+    transition: width 800ms steps(18);
+    width: 100%;
+}
+
+#divVoltarParaLuta a p{
+    margin-top: 3px;
+    text-wrap: nowrap;
+}
+
+#divHeaderText{
+    /* border: 2px solid red; */
+    text-align: center;
+    width: 100%;
+    height: 5vh;
+}
+
+#divHeaderText h2{
+    font-weight: 200;
+}
+
+#divKPIS{
+    /* border: 2px solid white; */
+    margin-top: 2vh;    
+    height: 23vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8.8vw;
+}
+
+.kpiCard{
+    border: 2px solid white;
+    border-radius: 20px;
+    height: 100%;
+    width: 20vw;
+    padding: 5px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.kpiCard span{
+    margin-top: 2vh;
+    margin-left: 0.5vw;
+    font-size: 4em;
+}
+
+#divCharts{
+    /* border: 2px solid white; */
+    margin-top: 2vh;    
+    height: calc(100% - 30vh);
+    display: flex;
+    justify-content: space-between;
+}
+
+.charts{
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}

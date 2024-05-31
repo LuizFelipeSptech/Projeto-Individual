@@ -14,6 +14,9 @@
         <div id="torielFightBackground">
             <img src="assets/TorielBattleClean.png">
         </div>
+        <div id="divTorielMorta">
+            <img src="assets/torielMorta.webp">
+        </div>
         <div id="torielHealthContainer">
             <div id="torielHealth">
                 <div id="currentHealt"></div>
@@ -22,7 +25,8 @@
         <div id="divButtons">
             <button onclick="atacar()" id="btnAtacar"><img src="assets/imgs/UndertaleHeart.png"
                     class="btnImgHeart"><span>FIGHT</span></button>
-            <button><img src="assets/imgs/UndertaleHeart.png" class="btnImgHeart"><span>MERCY</span></button>
+            <button onclick="poupar()" id="btnPoupar"><img src="assets/imgs/UndertaleHeart.png"
+                    class="btnImgHeart"><span>MERCY</span></button>
         </div>
         <div id="containerVida">
             <div id="divVida">
@@ -32,7 +36,7 @@
         <div id="chatContainer">
             <div id="chat">
                 <div id="line">
-                    <p>Lorem ipsum dolor sit amet.</p>
+                    <p>* Toriel bloqueia o caminho.</p>
                 </div>
             </div>
         </div>
@@ -70,23 +74,36 @@
 
     let vidaVisivel = false
     let vidaAtual = 20
-    let danoAcumulado = 0
+    let danoAcumulado = 80
     let danoTomadoNoTurno = 0
 
     function atacar() {
         btnAtacar.disabled = true
+        btnPoupar.disabled = true
+        line.style.width = "0"
         chatContainer.style.display = "none"
+        line.innerHTML = `<p id="pLine">* Toriel bloqueia o caminho.</p> `
+        pLine.style.width = "100%"
         hitGif.src = "assets/com--unscreen.gif"
         trocarVisibilidadeVida()
         setTimeout(() => {
             hitGif.src = ""
-            calcularDano()
+            calcularDanoPlayer()
+            if (danoAcumulado == 100) {
+                divTorielMorta.style.display = "flex"
+                sessionStorage.MATOU_TORIEL = true
+                setInterval(() => {
+                    window.location.href = "./dashboard.html"
+                }, 3000);
+            }
             tremerElementosDireita()
             setTimeout(() => {
                 trocarVisibilidadeVida()
-                chatContainer.style.display = "flex"
-                roundToriel()
+                if(danoAcumulado != 100){
+                    roundToriel()
+                }
             }, 300);
+
         }, 560);
     }
 
@@ -103,28 +120,38 @@
     function tremerElementosDireita() {
         torielHealth.style.transform = "translate(3px)"
         torielFightBackground.style.transform = "translate(3px)"
+        divTorielMorta.style.transform = "translate(3px)"
         setTimeout(tremerElementosEsquerda, 100);
     }
-
+    
     function tremerElementosEsquerda() {
         torielHealth.style.transform = "translate(-3px)"
         torielFightBackground.style.transform = "translate(-3px)"
+        divTorielMorta.style.transform = "translate(-3px)"
         setTimeout(voltarElementosPosicaoOriginal, 100);
     }
-
+    
     function voltarElementosPosicaoOriginal() {
         torielHealth.style.transform = "translate(0px)"
         torielFightBackground.style.transform = "translate(0px)"
+        divTorielMorta.style.transform = "translate(0px)"
     }
 
-    function calcularDano() {
+    function calcularDanoPlayer() {
         let danoDadoNoTurno = Math.ceil(Math.random() * 9) + 14
-        danoTomadoNoTurno = Math.floor(Math.random() * 3) + 2
         danoAcumulado += danoDadoNoTurno
-        if(danoAcumulado > 100){
+        if (danoAcumulado > 100) {
             danoAcumulado = 100
         }
         currentHealt.style.width = `${100 - (danoAcumulado)}%`
+    }
+
+    function calcularDanoToriel() {
+        if (vidaAtual > 3 && vezesPoupadas <= 4) {
+            danoTomadoNoTurno = Math.floor(Math.random() * 4) + 2
+        } else {
+            danoTomadoNoTurno = 0
+        }
     }
 
 
@@ -172,6 +199,7 @@
 
 
     function processarDano() {
+        calcularDanoToriel()
         vidaAtual -= danoTomadoNoTurno
         if (vidaAtual > 0) {
             apagarVida()
@@ -183,7 +211,12 @@
             mainFrame.style.display = "none"
             setInterval(mostrarGameover, 2000)
         }
-        btnAtacar.disabled = false
+        chatContainer.style.display = "flex"
+        setTimeout(() => {
+            line.style.width = "100%"
+            btnPoupar.disabled = false
+            btnAtacar.disabled = false
+        }, 50);
     }
 
     function apagarVida() {
@@ -205,5 +238,35 @@
         danoAcumulado = 0
         currentHealt.style.width = "100%"
         divVida.innerHTML = `<p>HP: ${vidaAtual}/20</p>`
+    }
+
+
+    let torielFalas = ["...", ".....", "... Você vai mesmo continuar?", "Eu não quero...", "Eu... não quero... perder outro...", "Entendo.. Eu desisto"]
+    let tempoDoDialogo = [50000, 50000, 20000, 20000, 10000, 20000]
+    let vezesPoupadas = 4
+
+    function poupar() {
+        btnPoupar.disabled = true
+        btnAtacar.disabled = true
+        line.innerHTML = `<p id="pLine">Toriel: &nbsp;</p> `
+        pLine.style.width = `70px`
+        setTimeout(() => {
+            pLine.style.width = `100%`
+            pLine.style.transition = `${tempoDoDialogo[vezesPoupadas]}ms`;
+            pLine.innerHTML += `${torielFalas[vezesPoupadas]}`
+            if (vezesPoupadas != 5) {
+                setTimeout(() => {
+                    vezesPoupadas++
+                    roundToriel()
+                }, tempoDoDialogo[vezesPoupadas] / 20);
+            } else {
+                setTimeout(() => {
+                    sessionStorage.MATOU_TORIEL = false
+                    window.location.href = "./dashboard.html"
+                }, 5000);
+            }
+
+        }, 100);
+
     }
 </script>
