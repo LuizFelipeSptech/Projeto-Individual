@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="assets/UndertaleHeart.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/config.css">
     <link rel="stylesheet" href="./css/dashboard.css">
     <title>Dashboard</title>
@@ -12,6 +13,9 @@
 
 <body>
     <div id="divBackgroundImg"><img src="assets/corridor.webp"></div>
+    <header>
+        <a href="index.html"><img src="assets/UndertaleHeart.png"></a>
+    </header>
     <div id="mainframe">
         <div id="divCardDashboards">
             <div id="divVoltarParaLuta">
@@ -55,9 +59,12 @@
     Chart.defaults.color = '#FFFFFF';
 
     const playerMatouToriel = sessionStorage.MATOU_TORIEL == "true"
+    const playerPoupouEMatouToriel = sessionStorage.POUPO_E_MATOU_TORIEL == "true"
 
-    if(playerMatouToriel){
+    if(playerMatouToriel && !playerPoupouEMatouToriel){
         textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${"USER"}</span>, este é O julgamento:</h2>`
+    } else if(playerPoupouEMatouToriel){
+        textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${"USER"} :)</span>, este é O julgamento:</h2>`
     } else {
         textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:white">${"USER"}</span>, este é O julgamento:</h2>`
         

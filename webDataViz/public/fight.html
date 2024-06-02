@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/UndertaleHeart.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/config.css">
     <link rel="stylesheet" href="./css/fight.css">
     <title>TechTale</title>
@@ -11,6 +12,15 @@
 
 <body>
     <main id="mainFrame">
+        <div class="audioDiv">
+            <audio controls loop id="battleAudio"><source src="assets/audios/TorielBattleTheme.mp3"></audio>
+        </div>
+        <div class="audioDiv">
+            <audio controls preload id="hitSound"><source src="assets/audios/UndertaleSoundAttack.mp3"></audio>
+        </div>
+        <div class="audioDiv">
+            <audio controls preload id="damageTakenSound"><source src="assets/audios/UndertaleDamageTaken.mp3"></audio>
+        </div>
         <div id="torielFightBackground">
             <img src="assets/TorielBattleClean.png">
         </div>
@@ -23,14 +33,14 @@
             </div>
         </div>
         <div id="divButtons">
-            <button onclick="atacar()" id="btnAtacar"><img src="assets/imgs/UndertaleHeart.png"
+            <button onclick="atacar()" id="btnAtacar"><img src="assets/UndertaleHeart.png"
                     class="btnImgHeart"><span>FIGHT</span></button>
-            <button onclick="poupar()" id="btnPoupar"><img src="assets/imgs/UndertaleHeart.png"
+            <button onclick="poupar()" id="btnPoupar"><img src="assets/UndertaleHeart.png"
                     class="btnImgHeart"><span>MERCY</span></button>
         </div>
         <div id="containerVida">
             <div id="divVida">
-                <p>HP: 20/20</p>
+                <p>LV: 1 HP: 20/20</p>
             </div>
         </div>
         <div id="chatContainer">
@@ -65,17 +75,48 @@
             <p>Restart</p>
         </button>
     </div>
+    <div id="startBattle">
+        <h1>Não Há Mais Volta</h1>
+        <button onclick="reset()">
+            <p>Batalhar</p>
+        </button>
+    </div>
 </body>
 
 </html>
 
 <script>
-    // Gif Time = 560ms
+    // Variáveis Gerais
 
     let vidaVisivel = false
-    let vidaAtual = 20
-    let danoAcumulado = 80
+    let vidaAtual = 0
+    let danoAcumulado = 0
     let danoTomadoNoTurno = 0
+    let numeroFireball = 0
+    let vezesPoupadas = 0
+
+    const torielFalas = [
+        "...",
+        ".....",
+        "... Você vai mesmo continuar?",
+        "Eu não quero...",
+        "Eu... não quero... perder outro...",
+        "Entendo.. Eu desisto"]
+    const tempoDoDialogo = [
+        50000,
+        50000,
+        20000,
+        20000,
+        10000,
+        20000]
+
+    // Função do sistema
+
+    function aparecerHUD() {
+        mainFrame.style.opacity = 1
+    }
+
+    // Ações do Player 
 
     function atacar() {
         btnAtacar.disabled = true
@@ -84,28 +125,66 @@
         chatContainer.style.display = "none"
         line.innerHTML = `<p id="pLine">* Toriel bloqueia o caminho.</p> `
         pLine.style.width = "100%"
+        hitSound.play()
         hitGif.src = "assets/com--unscreen.gif"
         trocarVisibilidadeVida()
         setTimeout(() => {
+            hitSound.currentTime = 0
+            hitSound.pause()
             hitGif.src = ""
             calcularDanoPlayer()
             if (danoAcumulado == 100) {
                 divTorielMorta.style.display = "flex"
-                sessionStorage.MATOU_TORIEL = true
-                setInterval(() => {
+                battleAudio.pause()
+                if (sessionStorage.MATOU_TORIEL == "false") {
+                    sessionStorage.POUPO_E_MATOU_TORIEL = true
+                } else {
+                    sessionStorage.MATOU_TORIEL = true
+                }
+                setTimeout(() => {
                     window.location.href = "./dashboard.html"
                 }, 3000);
             }
             tremerElementosDireita()
             setTimeout(() => {
                 trocarVisibilidadeVida()
-                if(danoAcumulado != 100){
+                if (danoAcumulado != 100) {
                     roundToriel()
                 }
             }, 300);
 
         }, 560);
     }
+
+    function poupar() {
+        btnPoupar.disabled = true
+        btnAtacar.disabled = true
+        line.innerHTML = `<p id="pLine">Toriel: &nbsp;</p> `
+        pLine.style.width = `70px`
+        setTimeout(() => {
+            pLine.style.width = `100%`
+            pLine.style.transition = `${tempoDoDialogo[vezesPoupadas]}ms`;
+            pLine.innerHTML += `${torielFalas[vezesPoupadas]}`
+            if (vezesPoupadas != 5) {
+                setTimeout(() => {
+                    vezesPoupadas++
+                    roundToriel()
+                }, tempoDoDialogo[vezesPoupadas] / 20);
+            } else {
+                battleAudio.pause()
+                setTimeout(() => {
+                    if (sessionStorage.MATOU_TORIEL == "true") {
+                        window.location.href = "./dashboard.html"
+                    } else {
+                        sessionStorage.MATOU_TORIEL = false
+                        window.location.href = "./dashboard.html"
+                    }
+                }, 5000);
+            }
+        }, 100);
+    }
+
+    // Animações Gerais
 
     function trocarVisibilidadeVida() {
         if (vidaVisivel) {
@@ -123,39 +202,30 @@
         divTorielMorta.style.transform = "translate(3px)"
         setTimeout(tremerElementosEsquerda, 100);
     }
-    
+
     function tremerElementosEsquerda() {
         torielHealth.style.transform = "translate(-3px)"
         torielFightBackground.style.transform = "translate(-3px)"
         divTorielMorta.style.transform = "translate(-3px)"
         setTimeout(voltarElementosPosicaoOriginal, 100);
     }
-    
+
     function voltarElementosPosicaoOriginal() {
         torielHealth.style.transform = "translate(0px)"
         torielFightBackground.style.transform = "translate(0px)"
         divTorielMorta.style.transform = "translate(0px)"
     }
 
-    function calcularDanoPlayer() {
-        let danoDadoNoTurno = Math.ceil(Math.random() * 9) + 14
-        danoAcumulado += danoDadoNoTurno
-        if (danoAcumulado > 100) {
-            danoAcumulado = 100
-        }
-        currentHealt.style.width = `${100 - (danoAcumulado)}%`
+    function apagarVida() {
+        divVida.style.display = "none"
     }
 
-    function calcularDanoToriel() {
-        if (vidaAtual > 3 && vezesPoupadas <= 4) {
-            danoTomadoNoTurno = Math.floor(Math.random() * 4) + 2
-        } else {
-            danoTomadoNoTurno = 0
-        }
+    function acenderVida() {
+        divVida.style.display = "block"
     }
 
+    // Ações da Toriel
 
-    let numeroFireball = 0
     function roundToriel() {
         summonFireBalls()
         setTimeout(() => {
@@ -197,19 +267,45 @@
         }
     }
 
+    // Dano
+
+    function calcularDanoPlayer() {
+        let danoDadoNoTurno = Math.ceil(Math.random() * 9) + 14
+        danoAcumulado += danoDadoNoTurno
+        if (danoAcumulado > 100) {
+            danoAcumulado = 100
+        }
+        currentHealt.style.width = `${100 - (danoAcumulado)}%`
+    }
+
+    function calcularDanoToriel() {
+        if (vidaAtual > 3 && vezesPoupadas <= 4) {
+            danoTomadoNoTurno = Math.floor(Math.random() * 4) + 2
+        } else {
+            danoTomadoNoTurno = 0
+        }
+    }
 
     function processarDano() {
         calcularDanoToriel()
         vidaAtual -= danoTomadoNoTurno
         if (vidaAtual > 0) {
             apagarVida()
-            divVida.innerHTML = `<p>HP: ${vidaAtual}/20</p>`
+            damageTakenSound.play()
+            divVida.innerHTML = `<p>LV: 1 HP: ${vidaAtual}/20</p>`
             setTimeout(acenderVida, 200)
+            setTimeout(()=>{
+                damageTakenSound.currentTime = 0
+                damageTakenSound.pause()
+            }, 200)
             setTimeout(apagarVida, 400)
             setTimeout(acenderVida, 600)
         } else {
+            mainFrame.style.opacity = 0
             mainFrame.style.display = "none"
-            setInterval(mostrarGameover, 2000)
+            battleAudio.pause()
+            battleAudio.currentTime = 0
+            setTimeout(mostrarGameover, 2000)
         }
         chatContainer.style.display = "flex"
         setTimeout(() => {
@@ -219,54 +315,26 @@
         }, 50);
     }
 
-    function apagarVida() {
-        divVida.style.display = "none"
-    }
-
-    function acenderVida() {
-        divVida.style.display = "block"
-    }
+    // Morte do Player
 
     function mostrarGameover() {
+        mainFrame.style.opacity = 0
         gameover.style.display = "flex"
     }
 
     function reset() {
         gameover.style.display = "none"
+        startBattle.style.display = "none"
         mainFrame.style.display = "block"
+        setTimeout(() => {
+            aparecerHUD()
+            battleAudio.play()
+        }, 100);
         vidaAtual = 20
         danoAcumulado = 0
+        vezesPoupadas = 0
         currentHealt.style.width = "100%"
-        divVida.innerHTML = `<p>HP: ${vidaAtual}/20</p>`
+        divVida.innerHTML = `<p>LV: 1 HP: ${vidaAtual}/20</p>`
     }
 
-
-    let torielFalas = ["...", ".....", "... Você vai mesmo continuar?", "Eu não quero...", "Eu... não quero... perder outro...", "Entendo.. Eu desisto"]
-    let tempoDoDialogo = [50000, 50000, 20000, 20000, 10000, 20000]
-    let vezesPoupadas = 4
-
-    function poupar() {
-        btnPoupar.disabled = true
-        btnAtacar.disabled = true
-        line.innerHTML = `<p id="pLine">Toriel: &nbsp;</p> `
-        pLine.style.width = `70px`
-        setTimeout(() => {
-            pLine.style.width = `100%`
-            pLine.style.transition = `${tempoDoDialogo[vezesPoupadas]}ms`;
-            pLine.innerHTML += `${torielFalas[vezesPoupadas]}`
-            if (vezesPoupadas != 5) {
-                setTimeout(() => {
-                    vezesPoupadas++
-                    roundToriel()
-                }, tempoDoDialogo[vezesPoupadas] / 20);
-            } else {
-                setTimeout(() => {
-                    sessionStorage.MATOU_TORIEL = false
-                    window.location.href = "./dashboard.html"
-                }, 5000);
-            }
-
-        }, 100);
-
-    }
 </script>

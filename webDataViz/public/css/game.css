@@ -10,6 +10,7 @@ header {
     position: absolute;
     top: 10px;
     left: 10px;
+    z-index: 2;
 }
 
 header img {
@@ -22,6 +23,10 @@ img {
     height: 100px;
 }
 
+#mainFrame{
+    opacity: 0;
+    transition: opacity 1500ms ease-in;
+}
 
 
 #sectionsHistory {
@@ -51,6 +56,10 @@ img {
     text-align: justify;
 }
 
+#text{
+    transition: opacity 500ms;
+}
+
 .divTextAndButton button {
     margin-top: 3vh;
     background-color: transparent;
@@ -67,22 +76,31 @@ img {
     color: black;
     transform: translateY(-2px);
     transition: 200ms;
+    cursor: pointer;
 }
 
 .divImg {
-    transition: 500ms;
+    transition: 1000ms;
 }
 
-#goodFloweyGif,
+#goodFloweyGif{
+    margin-left: 10vw;
+    height: 70vh;
+    transition: transform 1000ms;
+}
+
+
 #badFloweyGif {
     margin-left: 10vw;
     height: 70vh;
+    transition: transform 1000ms;
     transform: translateX(-60vw);
 }
 
 #divVideo img {
     height: 70vh;
     width: 40vw;
+    transition: transform 1000ms;
     transform: translateX(-60vw);
 }
 
@@ -96,19 +114,39 @@ img {
 }
 
 #froggitImg {
-    height: 60vh;
+    height: 50vh;
     margin-left: 5vw;
+    transition: transform 1000ms;
     transform: translateX(-60vw);
 }
 
 #labyrinthImg {
-    height: 70vh;
+    height: 60vh;
     margin-left: 8vw;
     transform: translateX(-60vw);
+    transition: transform 1000ms;
 }
 
 #homeImg {
-    height: 55vh;
+    height: 45vh;
     margin-left: 3vw;
     transform: translateX(-60vw);
+    transition: transform 1000ms;
+}
+
+#coverDiv2 {
+    position: absolute;
+    background-color: black;
+    /* border: 1px solid white; */
+    width: 50vw;
+    height: 21vh;
+    top: 33.5px;
+    z-index: 1;
+}
+
+#doorImg{
+    transition: transform 1000ms;
+    transform: translateX(-70vw);
+    height: 55vh;
+    margin-left: 3vw;
 }

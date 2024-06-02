@@ -1,0 +1,265 @@
+html{
+    overflow: hidden;
+}
+
+body{
+    overflow-x: hidden;
+    background-color: black;
+}
+
+button{
+    cursor: pointer;
+}
+
+body::-webkit-scrollbar {
+    width: 0;               /* width of the entire scrollbar */
+}
+
+#scroller::-webkit-scrollbar {
+    width: .5vw;               /* width of the entire scrollbar */
+}
+  
+#scroller::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);        /* color of the tracking area */
+}
+
+#scroller::-webkit-scrollbar-thumb {
+    background-color: white;    /* color of the scroll thumb */
+    border-radius: 10px;       /* roundness of the scroll thumb */
+}
+
+#scroller {
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+}
+  
+#scroller section {
+    scroll-snap-align: start;
+}
+
+
+#watherfallAudio{
+    position: absolute;
+    opacity: 0;
+}
+
+
+#navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 9vh;
+    width: 100vw;
+    padding: 0 20px;
+    /* border-bottom: 1px solid white; */
+    position: fixed;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.363);
+    /* rgba(0, 0, 0, 0.363); */
+}
+
+#navbar img{
+    cursor: pointer;
+    height: 30px;
+} 
+
+#navbar button{
+    color: white;
+    background-color: #00000000;
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 15px;
+    font-family: verdana;
+    font-weight: 800;
+    transition: 200ms;
+}
+
+#navbar #audioBtn{
+    position: relative;
+    left: -35vw;
+    bottom: 0.2vh;
+}
+
+#navbar #audioBtn:hover{
+    color: black;
+    background-color: white;
+    transform: translate(0);
+}
+
+#navbar #loginBtn{
+    color: black;
+    background-color: white;
+}
+
+#navbar button:hover{
+    transition: 200ms;
+    transform: translateY(-5px);
+}
+
+
+
+#mainFrame{
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#imgFlowey {
+    z-index: -1;
+    position: relative;
+    top: -20vh;
+}
+
+#imgReino{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+#imgReino img{
+    height: 100vh;
+    position: relative;
+    z-index: -1;
+    top: 40px;
+}
+
+#mainFrame #divBtnPularAbertura{
+    position: absolute;
+    top: 5vh;
+    right: 3vw; 
+    display: none;
+}
+
+#mainFrame #divBtn button{
+    position: absolute;
+    top: calc(50% - 38.5px);
+    left: calc(50% - 158px);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.329);
+    border-radius: 15px;
+    padding: 18px 20px 12px 20px;
+    font-family: undertale;
+    font-size: 30px;
+    transition: 100ms;
+}
+
+#mainFrame #divBtn button:hover{
+    transition: 200ms;
+    transform: translateY(-5px);
+    border: 2px solid rgba(255, 255, 255);
+}
+
+#divBtnPularAbertura button{
+    color: white;
+    background-color: #00000000;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 18px 15px 12px 20px;
+    font-family: undertale;
+    font-size: 25px;
+}
+
+#divBtnPularAbertura button:hover{
+    color: black;
+    background-color: white;
+    transition: 200ms;
+}
+
+#videoTag {
+    width: 70vw;
+}
+
+
+
+#recepcao{
+    display: none;
+}
+
+#recepcao button{
+    position: absolute;
+    top: calc(50% - 38.5px);
+    left: calc(50% - 182px);
+    background-color: #00000000;
+    color: white;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 18px 20px 12px 20px;
+    font-family: undertale;
+    font-size: 30px;
+}
+
+#recepcao button span{
+    color: red;
+}
+
+
+
+#sobreUndertale, #underAndI, #ONU{
+    height: 100vh;
+    position: relative;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#divTextAboutUndertale, #divTextONU{
+    width: 44vw;
+    margin-left: 2vw;
+    z-index: 1;
+}
+
+#divTextAboutUndertale h2, #divTextUnderAndI h2, #divTextONU h2{
+    font-size: 7vh;
+    letter-spacing: 5px;
+    text-decoration: underline;
+}
+
+#divTextAboutUndertale p, #divTextUnderAndI p, #divTextONU p{
+    letter-spacing: 2.5px;
+    line-height: 22.1px;
+    margin-top: 2vh;
+    text-indent: 30px;
+    text-align: justify;
+}
+
+#divImgAboutUndertale, #divImgONU{
+    position: absolute;
+    top: 10vh;
+}
+
+#divImgAboutUndertale img, #divImgONU img {
+    height: 90vh;
+    width: 100vw;
+}
+
+
+
+#divTextUnderAndI{
+    width: 46vw;
+    margin-right: 2vw;
+    z-index: 1;
+}
+
+#divTextUnderAndI h2{
+    font-size: 5vh;
+}
+
+#divImgUnderAndI{
+    margin-left: 6vw;
+}
+
+#divImgUnderAndI img{
+    height: 60vh;
+}
+
+
+
+#divImgONU{
+    right:5vw;
+}

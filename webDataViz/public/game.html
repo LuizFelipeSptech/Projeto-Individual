@@ -7,42 +7,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/UndertaleHeart.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/config.css">
     <link rel="stylesheet" href="./css/game.css">
     <title>TechTale</title>
 </head>
 
-<body>
-    <header>
-        <a href="mainPage.html"><img src="assets/imgs/UndertaleHeart.png"></a>
-    </header>
-    <main id="sectionsHistory">
-        <section>
-            <!-- <div  class="divImg">
-                <img id="goodFloweyGif" src="https://static.wikia.nocookie.net/undertale/images/2/21/Flowey.gif/revision/latest/scale-to-width/360?cb=20160208224613&path-prefix=pt-br" alt="FloweyTalking">
-            </div> -->
-            <!-- <div class="divImg">
-                <img id="badFloweyGif" src="assets/badFloweyGif.gif">
-            </div> -->
-            <!-- <div id="divVideo">
-                <img src="assets/first flowey encounter - UNDERTALE.gif">
-                <div id="coverDiv"></div>
-            </div> -->
-            <!-- <div class="divImg">
-                <img id="froggitImg" src="assets/froggitAndToriel.webp">
-            </div> -->
-            <div class="divImg">
-                <img id="labyrinthImg" src="assets/torielSpikeLabyrinth.png">
-            </div>
-            <!-- <div class="divImg">
-                <img id="homeImg" src="assets/torielHome.jpg">
-            </div> -->
-            <div class="divTextAndButton">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae voluptatem nam inventore perferendis dolores tenetur ut et quaerat quas incidunt debitis magni repellat, quisquam obcaecati consequatur consequuntur repellendus, distinctio ab. Exercitationem accusamus eos dolorum similique commodi, vero molestias praesentium necessitatibus quaerat aliquam, sequi tenetur nostrum in minima error quis laboriosam.</p>
-                <button>Seguir</button>
-            </div>
-        </section>
-    </main>
+<body onload="aparecerHUD()">
+    <div id="mainFrame">
+        <header>
+            <a href="index.html"><img src="assets/UndertaleHeart.png"></a>
+        </header>
+        <main id="sectionsHistory">
+            <section>
+                <div class="divImg">
+                    <img id="goodFloweyGif" class="img"
+                        src="https://static.wikia.nocookie.net/undertale/images/2/21/Flowey.gif/revision/latest/scale-to-width/360?cb=20160208224613&path-prefix=pt-br"
+                        alt="FloweyTalking">
+                </div>
+                <div style="display: none;" class="divImg">
+                    <img class="img" id="badFloweyGif" src="assets/badFloweyGif.gif">
+                </div>
+                <div id="divVideo" class="divImg" style="display: none;">
+                    <img class="img" src="assets/first flowey encounter - UNDERTALE.gif">
+                    <div id="coverDiv"></div>
+                </div>
+                <div class="divImg" style="display: none;">
+                    <img class="img" id="froggitImg" src="assets/froggitAndToriel.webp">
+                </div>
+                <div class="divImg" style="display: none;">
+                    <img class="img" id="labyrinthImg" src="assets/torielSpikeLabyrinth.png">
+                </div>
+                <div class="divImg" style="display: none;">
+                    <img class="img" id="homeImg" src="assets/torielHome.jpg">
+                </div>
+                <div class="divImg" style="display: none;">
+                    <div id="coverDiv2"></div>
+                    <img class="img" id="doorImg" src="assets/torielDoor.webp">
+                </div>
+                <div class="divTextAndButton">
+                    <p id="text">Ao cair no subsolo e andar um pouco você se encontra com uma flor falante, ela se apresenta como Flowey e começa a falar um pouco sobre as mecânicas daquele mundo. Após uma breve explicação ela fala para você pegar certas “balas da amizade” para ficar mais forte e sobreviver naquele novo local hostil.</p>
+                    <button id="botaoSeguir" onclick="irParaProximo()">Seguir</button>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 
 </html>
+
+<script>
+    const divsimagens = document.getElementsByClassName("divImg")
+    const imagens = document.getElementsByClassName("img")
+    const textos = [
+        "Ao cair no subsolo e andar um pouco você se encontra com uma flor falante, ela se apresenta como Flowey e começa a falar um pouco sobre as mecânicas daquele mundo. Após uma breve explicação ela fala para você pegar certas “balas da amizade” para ficar mais forte e sobreviver naquele novo local hostil.",
+        "Porém, ao encostar nas “balas da amizade”, você acaba sendo ferido gravemente, assim, revelando as verdadeiras intenções de Flowey, ela começa a rir de sua inocência e lhe cerca de “balas da amizade” com intenção de te matar. E então, nesse momento, pronúncia uma das frases mais conhecidas na comunidade de Undertale: “Idiota. Nesse mundo, é matar ou ser morto”.",
+        "Quando você está preste a morrer por conta das balas não tão amigáveis, acontece algo inesperado, ao encostar nelas, você se sente revigorado, após um breve momento de confusão você enxerga uma bola de fogo surgindo da escuridão e atingindo a planta, que sai voando com o impacto, nesse momento você avista uma criatura com silhueta humanoide e características de cabra, logo ela se apresenta como Toriel, a guardiã das ruinas.",
+        "Toriel explica que as ruinas são um lugar perigoso, cheio de monstros que vão querer te matar na primeira oportunidade e começa a te guiar pelo lugar, afastando alguns monstros que aparecem no caminho, tentando sempre deixar claro que a única escolha que você tem para sobreviver é lutar contra esses monstros, mesmo que alguns possam fugir ou desistir de lutar caso você apenas converse com eles. Toriel parece muito preocupada com sua segurança.",
+        "Toriel segue te guiando pelas ruinas, sempre te protegendo e te ajudando a passar pelas armadilhas e, mesmo que seu comportamento seja estranho as vezes, já que ela sempre está testando se você consegue ser independente, ela passa muita segurança e acolhimento pra você, jogador, sendo que ela só te deixa correr algum perigo quando, por conta de um acidente, ela tem que seguir em frente até sua casa rapidamente, pedindo para que você espere ela, o que nenhum jogador faz.",
+        "Após alguns combates e armadilhas, você chega até o lar de Toriel, lá ela cozinha uma torta, mostra um quarto onde você pode dormir e conta fatos interresantes e aleatórios, falando e mostrando que aquele lugar é ideal para viver... mas você não pode ficar, você tem uma missão para cumprir, você precisa! voltar pra casa, então, após dormir, e aproveitando a ausência de Toriel na casa você se dirige para o corredor subterrâneo após as escadas que ela falou para não descer.",
+        "Lá, você encontra a porta para a saída das ruinas, mas, juntamente você encontra Toriel, bloqueando a passagem. Então, após te perceber, ela abre o seguinte discurso: “Você não pode passar... Todos eles, todos que passaram, se foram, todos mortos por Asgore. Se você quiser passar, se você realmente quer voltar para casa, prove que é forte o suficiente, batalhe comigo e me mate!”"]
+    let posicao = 0
+
+    function irParaProximo() {
+        botaoSeguir.disabled = true
+        setTimeout(() => {
+            imagens[posicao].style.transform = "translateX(-70vw)"
+            posicao++
+            if (posicao == 7) {
+                mainFrame.style.opacity = 0
+                setTimeout(() => {
+                    window.location.href = "./fight.html"
+                }, 2000);
+            }
+            text.style.opacity = 0
+        }, 100);
+        setTimeout(() => {
+            if(posicao < 7){
+                divsimagens[posicao - 1].style.display = "none"
+                divsimagens[posicao].style.display = "block"
+                setTimeout(() => {
+                    imagens[posicao].style.transform = "translateX(0vw)"
+                    setTimeout(() => {
+                        text.innerHTML = `${textos[posicao]}`
+                        text.style.opacity = 1
+                        botaoSeguir.disabled = false
+                    }, 400);
+                }, 100);
+            }
+        }, 600);
+    }
+
+    function aparecerHUD() {
+        mainFrame.style.opacity = 1
+    }
+
+</script>

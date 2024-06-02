@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/UndertaleHeart.png" type="image/x-icon">
     <link rel="stylesheet" href="css/config.css">
     <link rel="stylesheet" href="css/cadastroLogin.css">
     <title>Cadastro</title>
@@ -22,22 +23,22 @@
                     <input id="inpConfirmarCadastro" type="text" title="Confirme Sua Senha"
                         placeholder="Confirmar Senha"><br>
                 </form>
-                <p onclick="mostrarLogin()">Já tenho conta! Logar!</p>
+                <p>Já tenho conta! <span onclick="mostrarLogin()">Logar!</span></p>
                 <div id="divErrorMessageCadastro" style="color: rgb(226, 0, 0);margin-top: 4px;font-size: 20px;"></div>
                 <button onclick="envioCadastro()">Enviar</button>
             </div>
             <div class="divForm">
                 <form>
                     <h2>Login</h2>
-                    <input name="nome" id="inpEmailLogin" type="email" placeholder="Email"><br>
-                    <input name="nome" id="inpSenhaLogin" type="text" placeholder="Senha"><br>
+                    <input name="nome" id="inpEmailLogin" type="email" placeholder="Email" title="Insira Seu Email"><br>
+                    <input name="nome" id="inpSenhaLogin" type="text" placeholder="Senha" title="Insira Sua Senha"><br>
                 </form>
-                <p onclick="mostrarCadastro()">Não tem uma conta? Cadastre-se!</p>
+                <p>Não tem uma conta? <span onclick="mostrarCadastro()">Cadastre-se!</span></p>
                 <div id="divErrorMessageLogin" style="color: rgb(226, 0, 0);margin-top: 4px;font-size: 20px;"></div>
                 <button onclick="envioLogin()">Enviar</button>
             </div>
             <div id="divHeart">
-                <img src="assets/imgs/UndertaleHeart.png">
+                <img src="assets/UndertaleHeart.png">
             </div>
         </div>
     </div>
@@ -97,7 +98,10 @@
         } else if (senha != confirmarSenha) {
             errorMessage = "Senhas Incoerentes"
         } else {
-            divErrorMessageCadastro.innerHTML = errorMessage
+            errorMessage = "Cadastro Realizado Com Sucesso"
+            setTimeout(() => {
+                mostrarLogin()
+            }, 2000);
             fetch("/usuarios/cadastrar", {
                 method: "POST",
                 headers: {
@@ -114,8 +118,10 @@
                 })
                 .catch(function (resposta) {
                     console.log(`#ERRO: ${resposta}`);
+                    errorMessage = resposta
                 });
         }
+        divErrorMessageCadastro.innerHTML = errorMessage
     }
 
     function envioLogin() {
@@ -133,7 +139,8 @@
             senha == senha.toLowerCase()) {
             errorMessage = "Senha Ou Email Invalidos"
         } else {
-            divErrorMessageLogin.innerHTML = errorMessage
+            sessionStorage.ID_USUARIO = 1
+            window.location.href = "./index.html"
             fetch("/usuarios/autenticar", {
                 method: "POST",
                 headers: {
@@ -164,5 +171,6 @@
                 console.log(erro);
             })
         }
+        divErrorMessageLogin.innerHTML = errorMessage
     }
 </script>

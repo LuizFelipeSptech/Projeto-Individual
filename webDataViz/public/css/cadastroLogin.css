@@ -77,10 +77,13 @@ body{
 
 .divForm p{
     font-family: undertale;
-    text-decoration: underline;
     font-size: 15px;
     margin: 10px auto;
     width: fit-content;
+}
+
+.divForm span{
+    text-decoration: underline;
     cursor: pointer;
 }
 
@@ -101,6 +104,7 @@ body{
 .divForm button:hover{
     transition: 200ms;
     background-color: rgb(8, 8, 8);
+    transform: translateY(-3px);
 }
 
 #inpEmailLogin, #inpSenhaLogin{

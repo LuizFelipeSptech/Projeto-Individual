@@ -10,6 +10,17 @@ main{
     top: 5vh;
 }
 
+.audioDiv{
+    position: absolute;
+    opacity: 0;
+}
+
+#mainFrame{
+    opacity: 0;
+    transition: opacity 3s ease-in;
+    display: none;
+}
+
 #torielFightBackground{
     position: absolute;
     width: 100vw;
@@ -29,6 +40,7 @@ main{
     display: none;
     justify-content: center;
 }
+
 
 #divTorielMorta img{
     position: relative;
@@ -78,18 +90,19 @@ main{
     border: 3px solid #F67C33;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 3px;
-
+    gap: 5px;
 }
 
 #divButtons button .btnImgHeart{
     opacity: 0;
-    height: 30px;
+    height: 0px;
     transition: 100ms;
 }
 
 #divButtons button:hover .btnImgHeart{
+    height: 30px;
     opacity: 1;
     transition: 200ms;
 }
@@ -131,7 +144,6 @@ main{
 }
 
 #pLine{
-    /* width: min-content; */
     /* border: 1px solid red; */
     /* position: absolute; */
     text-wrap: nowrap;
@@ -186,7 +198,7 @@ main{
 #containerVida{
     position: absolute;
     bottom: 28.8vh;
-    left: 44vw;
+    left: 41.3vw;
     /* border: 1px solid red; */
 }
 
@@ -196,7 +208,7 @@ main{
     font-size: 2rem;
 }
 
-#gameover{
+#gameover, #startBattle{
     height: 100vh;
     width: 100vw;
     display: none;
@@ -205,21 +217,25 @@ main{
     justify-content: center;
 }
 
-#gameover h1{
+#gameover h1, #startBattle h1{
     font-size: 5rem;
     cursor: default;
 }
 
-#gameover button{
+#gameover button, #startBattle button{
     background-color: transparent;
     border: 0;
 }
 
-#gameover button p{
+#gameover button p, #startBattle button p{
     font-size: 2rem;
     cursor: pointer;
 }
 
-#gameover button:hover p{
+#gameover button:hover p , #startBattle button:hover p{
     text-decoration: underline;
+}
+
+#startBattle{
+    display: flex;
 }

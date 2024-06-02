@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR" id="scroller">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/UndertaleHeart.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/config.css">
+    <title>UnderTech</title>
+</head>
+
+<body id="body">
+    <main id="scroller">
+        <audio controls id="watherfallAudio" loop>
+            <source src="assets/audios/WaterfallTheme.mp3">
+        </audio>
+        <section id="navbar">
+            <a onclick="resetarStorager()">
+                <img src="assets/UndertaleHeart.png" alt="">
+            </a>
+            <button onclick="playAndStopAudio()" id="audioBtn">Tocar Música</button>
+            <div id="loginButtons">
+                <button onclick="redirecionarParaCadastroLogin(1)">Cadastro</button>
+                <button onclick="redirecionarParaCadastroLogin(0)" id="loginBtn">Login</button>
+            </div>
+        </section>
+        <section id="mainFrame">
+            <div id="divBtnPularAbertura">
+                <button onclick="pularAbertura()">Pular</button>
+            </div>
+            <div id="divBtn">
+                <button onclick="ligarVideo()"><span>Começar Aventura</span></button>
+            </div>
+            <div id="divVideo" style="display: none;">
+                <video id="videoTag">
+                    <source src="assets/Undertale - Abertura (PT_BR).mp4" type="video/mp4">
+                </video>
+            </div>
+            <div id="recepcao">
+                <button onclick="redirecionarParaJogo()">Bem Vindo Ao <span>Subsolo</span></button>
+            </div>
+            <div id="imgReino">
+                <img src="assets/reino.png" alt="">
+            </div>
+            <div id="imgFlowey" style="display: none;">
+                <img src="assets/floweyZone.webp" alt="">
+            </div>
+        </section>
+        <section id="sobreUndertale">
+            <div id="divTextAboutUndertale">
+                <h2>O que é Undertale?</h2>
+                <p>
+                    Undertale é um game indie criado por Robert "Toby" Fox. O jogo ganhou destaque devido à sua
+                    narrativa, mecânica de jogo original e personagens marcantes. A trama se desenrola em um cenário
+                    subterrâneo habitado por criaturas, que foram banidas após um conflito contra os humanos. O jogador
+                    assume o papel de uma criança humana que acidentalmente chega nesse universo e tenta descobrir uma
+                    maneira de retornar ao lar.
+                </p>
+            </div>
+            <div id="divImgAboutUndertale">
+                <img src="assets/friskWithHeart.png" alt="">
+            </div>
+        </section>
+        <section id="underAndI">
+            <div id="divImgUnderAndI">
+                <img src="assets/sans.png" alt="">
+            </div>
+            <div id="divTextUnderAndI">
+                <h2>Minha Ligação com Undertale</h2>
+                <p>
+                    Undertale foi um dos jogos que mais consumi conteúdo quando criança, sendo um dos primeiros jogos
+                    que instalei em meu computador, o jogo me mostrou um lado da vida muito divergente do que eu estava
+                    acostumado e me inseriu pela primeira vez em uma comunidade, onde aderi gosto a jogos digitais e
+                    parte de minha personalidade foi formada.
+                </p>
+            </div>
+        </section>
+        <section id="ONU">
+            <div id="divTextONU">
+                <h2>ODS e Undertale</h2>
+                <p>
+                    A ODS 10.2 propõe o seguinte: “Até 2030, empoderar e promover a <u>inclusão social</u>, econômica e
+                    política de todos, independentemente da idade, sexo, deficiência, raça, etnia, origem, religião,
+                    condição econômica ou outra.” Visto isso, o jogo se baseia no preconceito que a criança caída no
+                    subsolo sofre por conta da guerra ocorrida há muito tempo entre humanos e monstros, e ao decorrer do
+                    jogo ela pode escolher em manter esse preconceito matando os monstros, ou demonstrar que o
+                    preconceito é apenas um preconceito.
+                </p>
+            </div>
+            <div id="divImgONU">
+                <img src="assets/Undyne.jpg!d" alt="">
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
+<script>
+    let pulouAbertura = false
+    let audioTocando = false
+    const usuarioLogado = Number(sessionStorage.ID_USUARIO)
+
+    function playAndStopAudio() {
+        if (audioTocando) {
+            watherfallAudio.pause()
+            audioBtn.innerHTML = "Tocar Música"
+            audioTocando = false
+        } else {
+            watherfallAudio.play()
+            audioBtn.innerHTML = "Pausar Música"
+            audioTocando = true
+        }
+    }
+
+    if (usuarioLogado) {
+        divBtn.style.display = "none"
+        imgReino.style.display = "none"
+        imgFlowey.style.display = "flex"
+        recepcao.style.display = "flex"
+    }
+
+    function resetarStorager() {
+        sessionStorage.removeItem("ID_USUARIO")
+        window.location.href = "./index.html"
+    }
+
+    function redirecionarParaCadastroLogin(cadastrarPressionado) {
+        sessionStorage.cadastrarPressionado = cadastrarPressionado;
+        setTimeout(() => {
+            window.location = "cadastroLogin.html";
+        }, "100");
+    }
+
+    function redirecionarParaJogo() {
+        if (usuarioLogado) {
+            window.location = "game.html"
+        } else {
+            redirecionarParaCadastroLogin(0)
+        }
+    }
+
+    function ligarVideo() {
+        let divVideo = document.getElementById('divVideo');
+        let videoTag = document.getElementById('videoTag');
+        let divBtn = document.getElementById('divBtn');
+        let navbar = document.getElementById('navbar');
+        let imgReino = document.getElementById('imgReino');
+
+        ONU.style.display = "none";
+        sobreUndertale.style.display = "none";
+        underAndI.style.display = "none";
+        divBtn.style.display = "none";
+        divVideo.style.opacity = 0;
+        navbar.style.opacity = 1;
+        imgReino.style.opacity = 1;
+        setTimeout(() => {
+            navbar.style.transition = "opacity 2000ms";
+            navbar.style.opacity = 0;
+            imgReino.style.transition = "opacity 2000ms";
+            imgReino.style.opacity = 0;
+        }, 100)
+        
+        setTimeout(() => {
+            watherfallAudio.pause()
+            imgReino.style.display = "none";
+            navbar.style.display = "none";
+            divVideo.style.display = "block";
+            setTimeout(() => {
+                mainFrame.style.height = "100vh"
+                divVideo.style.transition = "opacity 1500ms";
+                divVideo.style.opacity = 1;
+                videoTag.play(); // Iniciar a reprodução do vídeo
+                divBtnPularAbertura.style.display = "block"
+            }, 10);
+        }, 2000);
+
+        setTimeout(() => {
+            if (!pulouAbertura) {
+                fadeOutVideo()
+            }
+        }, 86000)
+    }
+    function pularAbertura() {
+        fadeOutVideo()
+        pulouAbertura = true
+    }
+
+    function fadeOutVideo() {
+        let floweyBackground = document.getElementById('imgFlowey');
+
+        divBtnPularAbertura.style.display = "none"
+        divVideo.style.transition = "opacity 2000ms";
+        divVideo.style.opacity = 0;
+        setTimeout(() => {
+            divVideo.style.display = "none"
+            recepcao.style.opacity = 0
+            recepcao.style.display = "block"
+            floweyBackground.style.opacity = 0
+            floweyBackground.style.display = "block";
+            navbar.style.opacity = 0
+            navbar.style.display = "flex"
+            floweyBackground.style.display = "block"
+            body.style.overflowY = "hidden"
+            videoTag.pause();
+            setTimeout(() => {
+                recepcao.style.transition = "opacity 2000ms"
+                recepcao.style.opacity = 1
+                navbar.style.transition = "opacity 2000ms"
+                navbar.style.opacity = 1
+                floweyBackground.style.transition = "opacity 2000ms"
+                floweyBackground.style.opacity = 1
+            }, 100)
+        }, 2000)
+    }
+</script>
