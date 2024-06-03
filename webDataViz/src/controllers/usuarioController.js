@@ -40,6 +40,27 @@ function autenticar(req, res) {
     }
 
 }
+function verificarBatalhas(req, res) {
+    var idUsuario = req.body.idServer;
+    usuarioModel.verificarBatalhas(idUsuario)
+        .then(
+            function (resultadoAutenticar) {
+                console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+                res.json({
+                    atoPrioritario: resultadoAutenticar[0].atoPrioritario,
+                    mortes: resultadoAutenticar[0].mortes
+                });
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
@@ -75,7 +96,51 @@ function cadastrar(req, res) {
     }
 }
 
+function editarAtoPrioritario(req, res) {
+    var atoPrioritario = req.body.atoPrioritarioServer;
+    console.log(atoPrioritario)
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.editarAtoPrioritario(atoPrioritario, idUsuario)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function editarMortes(req, res) {
+    var mortes = req.body.mortesServer;
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.editarMortes(mortes, idUsuario)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    verificarBatalhas,
+    editarAtoPrioritario,
+    editarMortes
 }

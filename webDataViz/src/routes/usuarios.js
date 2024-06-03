@@ -12,4 +12,16 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+router.post("/verificarBatalhas", function (req, res) {
+    usuarioController.verificarBatalhas(req, res);
+});
+
+router.put("/editarAtoPrioritario/:idUsuario", function (req, res) {
+    usuarioController.editarAtoPrioritario(req, res);
+});
+
+router.put("/editarMortes/:idUsuario", function (req, res) {
+    usuarioController.editarMortes(req, res);
+});
+
 module.exports = router;

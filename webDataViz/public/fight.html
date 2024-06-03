@@ -13,13 +13,19 @@
 <body>
     <main id="mainFrame">
         <div class="audioDiv">
-            <audio controls loop id="battleAudio"><source src="assets/audios/TorielBattleTheme.mp3"></audio>
+            <audio controls loop id="battleAudio">
+                <source src="assets/audios/TorielBattleTheme.mp3">
+            </audio>
         </div>
         <div class="audioDiv">
-            <audio controls preload id="hitSound"><source src="assets/audios/UndertaleSoundAttack.mp3"></audio>
+            <audio controls preload id="hitSound">
+                <source src="assets/audios/UndertaleSoundAttack.mp3">
+            </audio>
         </div>
         <div class="audioDiv">
-            <audio controls preload id="damageTakenSound"><source src="assets/audios/UndertaleDamageTaken.mp3"></audio>
+            <audio controls preload id="damageTakenSound">
+                <source src="assets/audios/UndertaleDamageTaken.mp3">
+            </audio>
         </div>
         <div id="torielFightBackground">
             <img src="assets/TorielBattleClean.png">
@@ -94,6 +100,9 @@
     let danoTomadoNoTurno = 0
     let numeroFireball = 0
     let vezesPoupadas = 0
+    let mortes = 0
+    let batalhaAntiga = ""
+    let resultadoBatalha = ""
 
     const torielFalas = [
         "...",
@@ -111,9 +120,101 @@
         20000]
 
     // Função do sistema
+    verificarBatalhasPassadas()
+
+    function verificarBatalhasPassadas() {
+        fetch("/usuarios/verificarBatalhas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idServer: sessionStorage.ID_USUARIO
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    batalhaAntiga = (json.atoPrioritario)
+                    mortes = (json.mortes)
+                });
+            } else {
+                resposta.text().then(texto => {
+                    alert(texto);
+                });
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+    }
 
     function aparecerHUD() {
         mainFrame.style.opacity = 1
+    }
+
+    function cadastrarResultado(resultadoBatalha) {
+        fetch("batalha/cadastrarBatalha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServer: sessionStorage.ID_USUARIO,
+                resultadorServer: resultadoBatalha
+            })
+        })
+            .then(function (resposta) {
+                errorMessage = "Cadastro Realizado Com Sucesso"
+
+                setTimeout(() => {
+                    alert("FoiPraDash")
+                }, 2000);
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function atualizarAtoPrioritario(atoPrioritario) {
+        fetch(`/usuarios/editarAtoPrioritario/${sessionStorage.ID_USUARIO}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                atoPrioritarioServer: atoPrioritario
+            })
+        }).then(function (resposta) {
+
+            if (resposta.ok) {
+                alert("Update Feito")
+            } else {
+                throw ("Houve um erro! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+
+    function atualizarMortes(mortes) {
+        fetch(`/usuarios/editarMortes/${sessionStorage.ID_USUARIO}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mortesServer: mortes
+            })
+        }).then(function (resposta) {
+
+            if (resposta.ok) {
+                alert("Update Feito")
+            } else {
+                throw ("Houve um erro! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
     }
 
     // Ações do Player 
@@ -136,14 +237,15 @@
             if (danoAcumulado == 100) {
                 divTorielMorta.style.display = "flex"
                 battleAudio.pause()
-                if (sessionStorage.MATOU_TORIEL == "false") {
-                    sessionStorage.POUPO_E_MATOU_TORIEL = true
+                if (batalhaAntiga == "poupou") {
+                    atoPrioritario = "poupou e matou"
+                } else if (batalhaAntiga == "poupou e matou"){
+                    atoPrioritario = "poupou e matou"
                 } else {
-                    sessionStorage.MATOU_TORIEL = true
+                    atoPrioritario = "matou"
                 }
-                setTimeout(() => {
-                    window.location.href = "./dashboard.html"
-                }, 3000);
+                cadastrarResultado("matou")
+                atualizarAtoPrioritario(atoPrioritario)
             }
             tremerElementosDireita()
             setTimeout(() => {
@@ -173,12 +275,14 @@
             } else {
                 battleAudio.pause()
                 setTimeout(() => {
-                    if (sessionStorage.MATOU_TORIEL == "true") {
-                        window.location.href = "./dashboard.html"
+                    if (batalhaAntiga != "poupou" && batalhaAntiga != "") {
+                        atoPrioritario == batalhaAntiga
+                        atualizarAtoPrioritario(atoPrioritario)
                     } else {
-                        sessionStorage.MATOU_TORIEL = false
-                        window.location.href = "./dashboard.html"
+                        atoPrioritario = "poupou"
+                        atualizarAtoPrioritario(atoPrioritario)
                     }
+                    cadastrarResultado("poupou")
                 }, 5000);
             }
         }, 100);
@@ -294,7 +398,7 @@
             damageTakenSound.play()
             divVida.innerHTML = `<p>LV: 1 HP: ${vidaAtual}/20</p>`
             setTimeout(acenderVida, 200)
-            setTimeout(()=>{
+            setTimeout(() => {
                 damageTakenSound.currentTime = 0
                 damageTakenSound.pause()
             }, 200)
@@ -318,6 +422,7 @@
     // Morte do Player
 
     function mostrarGameover() {
+        mortes++
         mainFrame.style.opacity = 0
         gameover.style.display = "flex"
     }
@@ -330,7 +435,7 @@
             aparecerHUD()
             battleAudio.play()
         }, 100);
-        vidaAtual = 20
+        vidaAtual = 4
         danoAcumulado = 0
         vezesPoupadas = 0
         currentHealt.style.width = "100%"
