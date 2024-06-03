@@ -98,10 +98,6 @@
         } else if (senha != confirmarSenha) {
             errorMessage = "Senhas Incoerentes"
         } else {
-            errorMessage = "Cadastro Realizado Com Sucesso"
-            setTimeout(() => {
-                mostrarLogin()
-            }, 2000);
             fetch("/usuarios/cadastrar", {
                 method: "POST",
                 headers: {
@@ -114,11 +110,16 @@
                 })
             })
                 .then(function (resposta) {
-                    console.log("resposta: ", resposta);
+                    errorMessage = "Cadastro Realizado Com Sucesso"
+                    divErrorMessageCadastro.innerHTML = errorMessage
+                    setTimeout(() => {
+                        mostrarLogin()
+                    }, 2000);
                 })
                 .catch(function (resposta) {
                     console.log(`#ERRO: ${resposta}`);
                     errorMessage = resposta
+                    divErrorMessageCadastro.innerHTML = errorMessage
                 });
         }
         divErrorMessageCadastro.innerHTML = errorMessage
@@ -139,8 +140,6 @@
             senha == senha.toLowerCase()) {
             errorMessage = "Senha Ou Email Invalidos"
         } else {
-            sessionStorage.ID_USUARIO = 1
-            window.location.href = "./index.html"
             fetch("/usuarios/autenticar", {
                 method: "POST",
                 headers: {
@@ -159,12 +158,14 @@
                         sessionStorage.EMAIL_USUARIO = json.email;
                         sessionStorage.NOME_USUARIO = json.nome;
                         sessionStorage.ID_USUARIO = json.id;
+                        setTimeout(() => {
+                            window.location.href = "./index.html"
+                        }, 2000);
                     });
-                    console.log("Deu Certo")
                 } else {
-                    console.log("Houve um erro ao tentar realizar o login!");
                     resposta.text().then(texto => {
-                        console.error(texto);
+                        errorMessage = texto;
+                        divErrorMessageLogin.innerHTML = errorMessage
                     });
                 }
             }).catch(function (erro) {
