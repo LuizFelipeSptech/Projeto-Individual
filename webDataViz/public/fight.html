@@ -101,6 +101,7 @@
     let numeroFireball = 0
     let vezesPoupadas = 0
     let mortes = 0
+    let atoPrioritario = ""
     let batalhaAntiga = ""
     let resultadoBatalha = ""
 
@@ -164,11 +165,8 @@
             })
         })
             .then(function (resposta) {
-                errorMessage = "Cadastro Realizado Com Sucesso"
-
-                setTimeout(() => {
-                    alert("FoiPraDash")
-                }, 2000);
+                console.log(`batalha Cadastrada! Resultado = ${atoPrioritario}`)
+                atualizarMortes(mortes)
             })
             .catch(function (resposta) {
                 console.log(`#ERRO: ${resposta}`);
@@ -187,9 +185,9 @@
         }).then(function (resposta) {
 
             if (resposta.ok) {
-                alert("Update Feito")
+                console.log("Update de atoPrioritario Feito")
             } else {
-                throw ("Houve um erro! Código da resposta: " + resposta.status);
+                throw ("Houve um erro ao atualizar atoPrioritario!");
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
@@ -252,7 +250,12 @@
                 trocarVisibilidadeVida()
                 if (danoAcumulado != 100) {
                     roundToriel()
+                } else {
+                    setTimeout(() => {
+                        window.location.href = "./dashboard.html"
+                    }, 3000);
                 }
+                
             }, 300);
 
         }, 560);
@@ -274,15 +277,16 @@
                 }, tempoDoDialogo[vezesPoupadas] / 20);
             } else {
                 battleAudio.pause()
+                if (batalhaAntiga != "poupou" && batalhaAntiga != null) {
+                    atoPrioritario == batalhaAntiga
+                    atualizarAtoPrioritario(atoPrioritario)
+                } else {
+                    atoPrioritario = "poupou"
+                    atualizarAtoPrioritario(atoPrioritario)
+                }
+                cadastrarResultado("poupou")
                 setTimeout(() => {
-                    if (batalhaAntiga != "poupou" && batalhaAntiga != "") {
-                        atoPrioritario == batalhaAntiga
-                        atualizarAtoPrioritario(atoPrioritario)
-                    } else {
-                        atoPrioritario = "poupou"
-                        atualizarAtoPrioritario(atoPrioritario)
-                    }
-                    cadastrarResultado("poupou")
+                    window.location.href = "./dashboard.html"
                 }, 5000);
             }
         }, 100);
@@ -436,7 +440,7 @@
             battleAudio.play()
         }, 100);
         vidaAtual = 4
-        danoAcumulado = 0
+        danoAcumulado = 50
         vezesPoupadas = 0
         currentHealt.style.width = "100%"
         divVida.innerHTML = `<p>LV: 1 HP: ${vidaAtual}/20</p>`

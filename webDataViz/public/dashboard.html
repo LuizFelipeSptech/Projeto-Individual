@@ -30,13 +30,13 @@
             <div id="divKPIS">
                 <div id="divKPIMortesToriel" class="kpiCard">
                     <p>Toriel morreu:</p>
-                    <span>100%</span>
-                    <p>das vezes</p>
+                    <span id="spanDeadsToriel">100</span>
+                    <p>vezes</p>
                 </div>
                 <div id="divKPIMortesPlayers" class="kpiCard">
                     <p>Toriel matou:</p>
-                    <span>100%</span>
-                    <p>das vezes</p>
+                    <span id="spanKillsToriel">100</span>
+                    <p>vezes</p>
                 </div>
             </div>
             <div id="divCharts">
@@ -58,17 +58,55 @@
     Chart.defaults.borderColor = '#FFFFFF';
     Chart.defaults.color = '#FFFFFF';
 
-    const playerMatouToriel = sessionStorage.MATOU_TORIEL == "true"
-    const playerPoupouEMatouToriel = sessionStorage.POUPO_E_MATOU_TORIEL == "true"
+    let playerMatouToriel = false
+    let playerPoupouEMatouToriel = false
 
-    if(playerMatouToriel && !playerPoupouEMatouToriel){
-        textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${"USER"}</span>, este é O julgamento:</h2>`
-    } else if(playerPoupouEMatouToriel){
-        textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${"USER"} :)</span>, este é O julgamento:</h2>`
-    } else {
-        textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:white">${"USER"}</span>, este é O julgamento:</h2>`
-        
+    verificarBatalhasPassadas()
+    function verificarBatalhasPassadas() {
+        fetch("/usuarios/verificarBatalhas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idServer: sessionStorage.ID_USUARIO
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    atoPrioritario = (json.atoPrioritario)
+                    mortes = (json.mortes)
+                });
+            } else {
+                resposta.text().then(texto => {
+                    alert(texto);
+                });
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+        })
     }
+
+    setTimeout(() => {
+        if (atoPrioritario == "matou") {
+            playerMatouToriel = true
+        } else if (atoPrioritario == "poupou") {
+            playerMatouToriel = false
+        } else {
+            playerMatouToriel = true
+            playerPoupouEMatouToriel = true
+        }
+        if (playerMatouToriel && !playerPoupouEMatouToriel) {
+            textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${nome}</span>, este é O julgamento:</h2>`
+        } else if (playerPoupouEMatouToriel) {
+            textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${nome} :)</span>, este é O julgamento:</h2>`
+        } else {
+            textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:white">${nome}</span>, este é O julgamento:</h2>`
+        }
+    }, 100);
+
+    const nome = sessionStorage.NOME_USUARIO
 
     new Chart(killsChart, {
         type: 'pie',
@@ -76,7 +114,7 @@
             labels: ['Toriel foi morta', 'Toriel foi poupada'],
             datasets: [{
                 data: [12, 19],
-                backgroundColor: ["#000000","#FFFFFF"]
+                backgroundColor: ["#000000", "#FFFFFF"]
             }]
         }
     });
@@ -86,7 +124,7 @@
             labels: ['Toriel Matou', 'Toriel Poupou'],
             datasets: [{
                 data: [12, 19],
-                backgroundColor: ["#000000","#FFFFFF"]
+                backgroundColor: ["#000000", "#FFFFFF"]
             }]
         }
     });
