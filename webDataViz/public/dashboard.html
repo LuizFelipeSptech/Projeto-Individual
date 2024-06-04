@@ -18,34 +18,40 @@
     </header>
     <div id="mainframe">
         <div id="divCardDashboards">
-            <div id="divVoltarParaLuta">
-                <a href="fight.html">
-                    <img src="assets/setaVoltar.png">
-                    <p>Batalhar Novamente</p>
-                </a>
+            <div style="display: none"  id="dashboardNormal">
+                <div id="divVoltarParaLuta">
+                    <a href="fight.html">
+                        <img src="assets/setaVoltar.png">
+                        <p>Batalhar Novamente</p>
+                    </a>
+                </div>
+                <div id="divHeaderText">
+                    <h2 id="textReception">Olá <span id="spanUserName" onmouseover="teste()">"USER"</span>, este é o
+                        julgamento:</h2>
+                </div>
+                <div id="divKPIS">
+                    <div id="divKPIMortesToriel" class="kpiCard">
+                        <p>Toriel morreu:</p>
+                        <span id="spanDeadsToriel">100</span>
+                        <p>vezes</p>
+                    </div>
+                    <div id="divKPIMortesPlayers" class="kpiCard">
+                        <p>Toriel matou:</p>
+                        <span id="spanKillsToriel">100</span>
+                        <p>vezes</p>
+                    </div>
+                </div>
+                <div id="divCharts">
+                    <div class="charts">
+                        <canvas id="killsChart"></canvas>
+                    </div>
+                    <div class="charts">
+                        <canvas id="deadsChart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div id="divHeaderText">
-                <h2 id="textReception">Olá <span id="spanUserName">"USER"</span>, este é o julgamento:</h2>
-            </div>
-            <div id="divKPIS">
-                <div id="divKPIMortesToriel" class="kpiCard">
-                    <p>Toriel morreu:</p>
-                    <span id="spanDeadsToriel">100</span>
-                    <p>vezes</p>
-                </div>
-                <div id="divKPIMortesPlayers" class="kpiCard">
-                    <p>Toriel matou:</p>
-                    <span id="spanKillsToriel">100</span>
-                    <p>vezes</p>
-                </div>
-            </div>
-            <div id="divCharts">
-                <div class="charts">
-                    <canvas id="killsChart"></canvas>
-                </div>
-                <div class="charts">
-                    <canvas id="deadsChart"></canvas>
-                </div>
+            <div id="dashboardGenocida">
+
             </div>
         </div>
     </div>
@@ -57,6 +63,8 @@
     Chart.defaults.backgroundColor = '#FFFFFF';
     Chart.defaults.borderColor = '#FFFFFF';
     Chart.defaults.color = '#FFFFFF';
+
+
 
     let playerMatouToriel = false
     let playerPoupouEMatouToriel = false
@@ -77,11 +85,15 @@
                 resposta.json().then(json => {
                     atoPrioritario = (json.atoPrioritario)
                     mortes = (json.mortes)
+                    if (mortes == null) {
+                        mortes = 0
+                    }
                 });
             } else {
                 resposta.text().then(texto => {
                     alert(texto);
                 });
+
             }
         }).catch(function (erro) {
             console.log(erro);
@@ -100,33 +112,64 @@
         if (playerMatouToriel && !playerPoupouEMatouToriel) {
             textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${nome}</span>, este é O julgamento:</h2>`
         } else if (playerPoupouEMatouToriel) {
-            textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${nome} :)</span>, este é O julgamento:</h2>`
+            textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red" onmouseover="teste()">${nome} :)</span>, este é O julgamento:</h2>`
         } else {
             textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:white">${nome}</span>, este é O julgamento:</h2>`
         }
-    }, 100);
+    }, 150);
 
     const nome = sessionStorage.NOME_USUARIO
+    pegarDadosDashboard()
+    function pegarDadosDashboard() {
+        fetch("/dashboard/pegarDadosDashboard", { cache: 'no-store' })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        qtdPartidas = (json[0].qtdPartidas)
+                        qtdAssassinatos = (json[0].qtdAssassinatos)
+                        qtdPoupadas = (json[0].qtdPoupadas)
+                        console.log(qtdPartidas)
+                        console.log(qtdAssassinatos)
+                        mortes = qtdPartidas - qtdAssassinatos - qtdPoupadas
+                        spanDeadsToriel.innerHTML = qtdAssassinatos
+                        spanKillsToriel.innerHTML = mortes
+                    });
+                } else {
+                    resposta.text().then(texto => {
+                        alert(texto);
+                    });
 
-    new Chart(killsChart, {
-        type: 'pie',
-        data: {
-            labels: ['Toriel foi morta', 'Toriel foi poupada'],
-            datasets: [{
-                data: [12, 19],
-                backgroundColor: ["#000000", "#FFFFFF"]
-            }]
-        }
-    });
-    new Chart(deadsChart, {
-        type: 'pie',
-        data: {
-            labels: ['Toriel Matou', 'Toriel Poupou'],
-            datasets: [{
-                data: [12, 19],
-                backgroundColor: ["#000000", "#FFFFFF"]
-            }]
-        }
-    });
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+    }
 
+    setTimeout(() => {
+        new Chart(killsChart, {
+            type: 'pie',
+            data: {
+                labels: ['Toriel foi morta', 'Toriel foi poupada'],
+                datasets: [{
+                    data: [qtdAssassinatos, qtdPoupadas],
+                    backgroundColor: ["#000000", "#FFFFFF"]
+                }]
+            }
+        });
+        new Chart(deadsChart, {
+            type: 'pie',
+            data: {
+                labels: ['Toriel Matou', 'Toriel Poupou'],
+                datasets: [{
+                    data: [mortes, qtdPoupadas],
+                    backgroundColor: ["#000000", "#FFFFFF"]
+                }]
+            }
+        });
+    }, 500);
+
+    function teste() {
+        alert("CU")
+    }
 </script>

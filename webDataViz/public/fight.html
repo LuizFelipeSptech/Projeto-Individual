@@ -113,12 +113,12 @@
         "Eu... não quero... perder outro...",
         "Entendo.. Eu desisto"]
     const tempoDoDialogo = [
-        50000,
-        50000,
-        20000,
-        20000,
+        25000,
+        25000,
         10000,
-        20000]
+        10000,
+        5000,
+        10000]
 
     // Função do sistema
     verificarBatalhasPassadas()
@@ -426,6 +426,7 @@
     // Morte do Player
 
     function mostrarGameover() {
+        cadastrarResultado("morreu")
         mortes++
         mainFrame.style.opacity = 0
         gameover.style.display = "flex"
@@ -440,7 +441,7 @@
             battleAudio.play()
         }, 100);
         vidaAtual = 4
-        danoAcumulado = 50
+        danoAcumulado = 0
         vezesPoupadas = 0
         currentHealt.style.width = "100%"
         divVida.innerHTML = `<p>LV: 1 HP: ${vidaAtual}/20</p>`
