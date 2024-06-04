@@ -18,40 +18,61 @@
     </header>
     <div id="mainframe">
         <div id="divCardDashboards">
-            <div style="display: none"  id="dashboardNormal">
-                <div id="divVoltarParaLuta">
-                    <a href="fight.html">
-                        <img src="assets/setaVoltar.png">
-                        <p>Batalhar Novamente</p>
-                    </a>
+            <div id="divVoltarParaLuta">
+                <a href="fight.html">
+                    <img src="assets/setaVoltar.png">
+                    <p>Batalhar Novamente</p>
+                </a>
+            </div>
+            <div id="divHeaderText">
+                <h2 id="textReception">Olá <span id="spanUserName">"USER"</span>, este é o
+                    julgamento:</h2>
+            </div>
+            <div id="divKPIS">
+                <div id="divKPIMortesToriel" class="kpiCard">
+                    <p>Toriel morreu:</p>
+                    <span id="spanDeadsToriel">100</span>
+                    <p>vezes</p>
                 </div>
-                <div id="divHeaderText">
-                    <h2 id="textReception">Olá <span id="spanUserName" onmouseover="teste()">"USER"</span>, este é o
-                        julgamento:</h2>
-                </div>
-                <div id="divKPIS">
-                    <div id="divKPIMortesToriel" class="kpiCard">
-                        <p>Toriel morreu:</p>
-                        <span id="spanDeadsToriel">100</span>
-                        <p>vezes</p>
-                    </div>
-                    <div id="divKPIMortesPlayers" class="kpiCard">
-                        <p>Toriel matou:</p>
-                        <span id="spanKillsToriel">100</span>
-                        <p>vezes</p>
-                    </div>
-                </div>
-                <div id="divCharts">
-                    <div class="charts">
-                        <canvas id="killsChart"></canvas>
-                    </div>
-                    <div class="charts">
-                        <canvas id="deadsChart"></canvas>
-                    </div>
+                <div id="divKPIMortesPlayers" class="kpiCard">
+                    <p>Toriel matou:</p>
+                    <span id="spanKillsToriel">100</span>
+                    <p>vezes</p>
                 </div>
             </div>
-            <div id="dashboardGenocida">
-
+            <div id="divCharts">
+                <div class="charts">
+                    <canvas id="killsChart"></canvas>
+                </div>
+                <div class="charts">
+                    <canvas id="deadsChart"></canvas>
+                </div>
+            </div>
+            <div id="dashboardGenocida" style="display: none;">
+                <div style="position: absolute;left: -10vw;height: 90vh;width: 95vw;">
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                    <p class="sorriso">:)</p>
+                </div>
+                <div>
+                    <h2 id="kpiGenocida"><span style="color: red;">20</span> PLAYERS POUPARAM, VOLTARAM E <u> MATARAM A
+                            TORIEL</u></h2>
+                </div>
             </div>
         </div>
     </div>
@@ -64,10 +85,36 @@
     Chart.defaults.borderColor = '#FFFFFF';
     Chart.defaults.color = '#FFFFFF';
 
-
-
     let playerMatouToriel = false
     let playerPoupouEMatouToriel = false
+
+    const sorrisos = document.getElementsByClassName("sorriso")
+
+    setInterval(() => {
+        for (let posicao = 0; posicao < sorrisos.length; posicao++) {
+            const randomX = Math.round(Math.random() * 100)
+            const randomY = Math.round(Math.random() * 100)
+            sorrisos[posicao].style.left = `${randomX}%`
+            sorrisos[posicao].style.top = `${randomY}%`
+        }
+    }, 1000);
+    // mostrarSegundaDashboard()
+    function mostrarSegundaDashboard() {
+        divCardDashboards.style.borderColor = "transparent"
+        dashboardGenocida.style.display = "block"
+        divVoltarParaLuta.style.display = "none"
+        divKPIS.style.display = "none"
+        divCharts.style.display = "none"
+    }
+
+    // mostrarPrimeiraDashboard()
+    function mostrarPrimeiraDashboard() {
+        dashboardGenocida.style.display = "none"
+        divCardDashboards.style.borderColor = "white"
+        divVoltarParaLuta.style.display = "flex"
+        divKPIS.style.display = "flex"
+        divCharts.style.display = "flex"
+    }
 
     verificarBatalhasPassadas()
     function verificarBatalhasPassadas() {
@@ -112,13 +159,14 @@
         if (playerMatouToriel && !playerPoupouEMatouToriel) {
             textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red">${nome}</span>, este é O julgamento:</h2>`
         } else if (playerPoupouEMatouToriel) {
-            textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red" onmouseover="teste()">${nome} :)</span>, este é O julgamento:</h2>`
+            textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:red" onmouseover="mostrarSegundaDashboard()" onmouseout="mostrarPrimeiraDashboard()">${nome} :)</span>, este é O julgamento:</h2>`
         } else {
             textReception.innerHTML = `<h2 id="textReception">Olá <span style="color:white">${nome}</span>, este é O julgamento:</h2>`
         }
-    }, 150);
+    }, 500);
 
     const nome = sessionStorage.NOME_USUARIO
+    const dataDeadChart = []
     pegarDadosDashboard()
     function pegarDadosDashboard() {
         fetch("/dashboard/pegarDadosDashboard", { cache: 'no-store' })
@@ -131,9 +179,15 @@
                         qtdPoupadas = (json[0].qtdPoupadas)
                         console.log(qtdPartidas)
                         console.log(qtdAssassinatos)
-                        mortes = qtdPartidas - qtdAssassinatos - qtdPoupadas
-                        spanDeadsToriel.innerHTML = qtdAssassinatos
-                        spanKillsToriel.innerHTML = mortes
+                        setTimeout(() => {
+                            mortes = qtdPartidas - qtdAssassinatos - qtdPoupadas
+                            spanDeadsToriel.innerHTML = qtdAssassinatos
+                            spanKillsToriel.innerHTML = mortes
+                            if(mortes!=0){
+                                dataDeadChart.push(mortes)
+                            }
+                            dataDeadChart.push(qtdAssassinatos)
+                        }, 1000);
                     });
                 } else {
                     resposta.text().then(texto => {
@@ -162,14 +216,10 @@
             data: {
                 labels: ['Toriel Matou', 'Toriel Poupou'],
                 datasets: [{
-                    data: [mortes, qtdPoupadas],
+                    data: dataDeadChart, // Check if mortes and qtdPoupadas have correct values
                     backgroundColor: ["#000000", "#FFFFFF"]
                 }]
             }
         });
-    }, 500);
-
-    function teste() {
-        alert("CU")
-    }
+    }, 1500);
 </script>

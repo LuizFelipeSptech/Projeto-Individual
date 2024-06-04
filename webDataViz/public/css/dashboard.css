@@ -1,4 +1,4 @@
-html{
+html, body{
     overflow-y: hidden;
 }
 
@@ -35,7 +35,7 @@ header img {
     align-items: center;
 }
 
-#divCardDashboards{
+#divCardDashboards {
     position: relative;
     height: 95vh;
     width: 80vw;
@@ -128,3 +128,24 @@ header img {
     justify-content: center;
     width: 40%;
 }
+
+.sorriso{
+    color: red;
+    font-size: 4em;
+    transition: 50ms linear;
+    position: absolute;
+}
+
+#kpiGenocida{
+    position: absolute;
+    top: 25vh;
+    left: 15vw;
+    padding: 20px;
+    border: 1px solid red;
+    border-radius: 20px;
+    width: 50vw;
+    font-size: 8vh;
+    filter: drop-shadow(0 0 15px red);
+}
+
+
