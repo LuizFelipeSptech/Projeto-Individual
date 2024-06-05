@@ -141,7 +141,7 @@ header img {
     top: 25vh;
     left: 15vw;
     padding: 20px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     border-radius: 20px;
     width: 50vw;
     font-size: 8vh;

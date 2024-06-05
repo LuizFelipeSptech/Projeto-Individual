@@ -7,9 +7,9 @@ function pegarDadosDashboard() {
     var instrucaoSql = `
     select count(id) qtdPartidas, 
 (select count(id) from partida where resultado = "matou") qtdAssassinatos,
-(select count(id) from partida where resultado = "poupou") qtdPoupadas 
-from partida;
-`;
+(select count(id) from partida where resultado = "poupou") qtdPoupadas, 
+(select count(id) from usuario where atoPrioritario = 'poupou e matou') as qtdPoupouMatou
+from partida;`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }

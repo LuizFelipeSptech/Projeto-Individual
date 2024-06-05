@@ -125,6 +125,7 @@ main{
     width: 52vw;
     height: 27vh;
     padding: 10px 5px;
+    /* border: 1px solid red; */
 }
 
 #line{

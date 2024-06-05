@@ -70,7 +70,7 @@
                     <p class="sorriso">:)</p>
                 </div>
                 <div>
-                    <h2 id="kpiGenocida"><span style="color: red;">20</span> PLAYERS POUPARAM, VOLTARAM E <u> MATARAM A
+                    <h2 id="kpiGenocida"><span style="color: red;" id="spanQtdPoupouMatou">20</span> PLAYERS POUPARAM, VOLTARAM E <u> MATARAM A
                             TORIEL</u></h2>
                 </div>
             </div>
@@ -172,22 +172,19 @@
         fetch("/dashboard/pegarDadosDashboard", { cache: 'no-store' })
             .then(function (resposta) {
                 if (resposta.ok) {
-                    console.log(resposta);
                     resposta.json().then(json => {
                         qtdPartidas = (json[0].qtdPartidas)
                         qtdAssassinatos = (json[0].qtdAssassinatos)
                         qtdPoupadas = (json[0].qtdPoupadas)
-                        console.log(qtdPartidas)
-                        console.log(qtdAssassinatos)
-                        setTimeout(() => {
-                            mortes = qtdPartidas - qtdAssassinatos - qtdPoupadas
-                            spanDeadsToriel.innerHTML = qtdAssassinatos
-                            spanKillsToriel.innerHTML = mortes
-                            if(mortes!=0){
-                                dataDeadChart.push(mortes)
-                            }
-                            dataDeadChart.push(qtdAssassinatos)
-                        }, 1000);
+                        qtdPoupouMatou = (json[0].qtdPoupouMatou)
+                        spanQtdPoupouMatou.innerHTML = qtdPoupouMatou
+                        mortes = qtdPartidas - qtdAssassinatos - qtdPoupadas
+                        spanDeadsToriel.innerHTML = qtdAssassinatos
+                        spanKillsToriel.innerHTML = mortes
+                        if (mortes != 0) {
+                            dataDeadChart.push(mortes)
+                        }
+                        dataDeadChart.push(qtdAssassinatos)
                     });
                 } else {
                     resposta.text().then(texto => {
